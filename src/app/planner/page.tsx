@@ -1,9 +1,12 @@
-import React from 'react'
+import { Calendar } from "@/components/calendar/calendar";
+import React from "react";
 
 const Planner = () => {
   return (
-    <div>Planner</div>
-  )
-}
+    <main>
+      <Calendar />
+    </main>
+  );
+};
 
-export default Planner
+export default Planner;
