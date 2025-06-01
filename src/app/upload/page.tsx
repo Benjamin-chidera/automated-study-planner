@@ -1,14 +1,16 @@
+// src/app/upload/page.tsx
 "use client";
 
 import FileDropzone from "@/components/drag-drop/drag-drop";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
+import axios, { AxiosError } from "axios";
 
 const Upload = () => {
-  const [files, setFiles] = useState<File[]>([]); // ✅ Proper typing
+  const [files, setFiles] = useState<File[]>([]);
 
   const handleFilesAccepted = (acceptedFiles: File[]) => {
-    setFiles(acceptedFiles.slice(0, 1)); // ✅ Replace previous file
+    setFiles(acceptedFiles.slice(0, 1));
   };
 
   const handleUpload = async () => {
@@ -17,13 +19,27 @@ const Upload = () => {
       return;
     }
 
-    // connect api here
+    const formData = new FormData();
+    formData.append("file", files[0]);
+
+    try {
+      const { data } = await axios.post("/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("Upload response:", data);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error("Upload error:", error.response?.data || error.message);
+      }
+    }
   };
 
   return (
     <main>
-      <h1 className=" font-bold text-xl md:text-3xl">Upload Study Material</h1>
-      <div className=" mt-10">
+      <h1 className="font-bold text-xl md:text-3xl">Upload Study Material</h1>
+      <div className="mt-10">
         <FileDropzone onFilesAccepted={handleFilesAccepted} />
 
         {files.length > 0 && (
@@ -40,10 +56,10 @@ const Upload = () => {
         )}
       </div>
 
-      <div className=" text-right">
+      <div className="text-right">
         <Button
-          className=" mt-7 bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
-          disabled={files.length == 0}
+          className="mt-7 bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+          disabled={files.length === 0}
           onClick={handleUpload}
         >
           Run OCR
