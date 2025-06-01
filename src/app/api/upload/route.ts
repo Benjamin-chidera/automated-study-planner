@@ -1,5 +1,4 @@
 // src/app/api/upload/route.ts
-
 import { HandlePDFExtract } from "@/utils/pdfParser";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -17,38 +16,34 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Allow PDF and common image file types
-    const allowedFileTypes = [
-      "application/pdf",
-      "image/png",
-      "image/jpeg",
-      "image/jpg",
-    ];
-    if (!allowedFileTypes.includes(file.type)) {
+    // Only allow PDFs in this route
+    if (file.type !== "application/pdf") {
       console.error(`Unsupported file type: ${file.type}`);
       return NextResponse.json(
         {
-          error: `Unsupported file type: ${file.type}. Allowed types are PDF, PNG, JPEG, JPG.`,
+          error: `Unsupported file type: ${file.type}. This endpoint only accepts PDFs.`,
         },
         { status: 400 }
       );
     }
 
-    let extractedText = "";
+    // Extract text from PDF
+    const extractedText = await HandlePDFExtract(file);
+    console.log("Extracted PDF text:", extractedText);
 
-    if (file.type === "application/pdf") {
-      extractedText = await HandlePDFExtract(file);
-      console.log(extractedText);
-    } else {
-      // extract text from image coming soon
-      console.log("Image extraction not yet implemented");
-      return NextResponse.json(
-        { error: "Image extraction not yet supported" },
-        { status: 200 }
-      );
-    }
+    // Send extracted text to save-text endpoint for storage
+    // await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save-text`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ text: extractedText }),
+    // });
 
-    return NextResponse.json({ extractedText }, { status: 200 });
+    return NextResponse.json(
+      { message: "PDF processed successfully", extractedText },
+      { status: 200 }
+    );
   } catch (error: unknown) {
     console.error("API error:", error);
     return NextResponse.json(

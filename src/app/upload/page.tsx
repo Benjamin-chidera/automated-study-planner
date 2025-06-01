@@ -5,9 +5,11 @@ import FileDropzone from "@/components/drag-drop/drag-drop";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
+import OcrImage from "@/components/ocr/ocr-image";
 
 const Upload = () => {
   const [files, setFiles] = useState<File[]>([]);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleFilesAccepted = (acceptedFiles: File[]) => {
     setFiles(acceptedFiles.slice(0, 1));
@@ -19,20 +21,46 @@ const Upload = () => {
       return;
     }
 
+    setIsProcessing(true);
     const formData = new FormData();
     formData.append("file", files[0]);
+    const file = formData.get("file");
 
     try {
-      const { data } = await axios.post("/api/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log("Upload response:", data);
+      let extractedText = "";
+
+      if (file instanceof File && file.type.startsWith("image/")) {
+        // Handle image OCR in the frontend
+        extractedText = await OcrImage(file);
+        console.log("Image OCR text:", extractedText);
+
+        // Send extracted text to backend for storage
+        // await axios.post("/api/save-text", { text: extractedText });
+      } else if (file instanceof File && file.type === "application/pdf") {
+        // Send PDF to backend for text extraction
+        const { data } = await axios.post("/api/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        extractedText = data.extractedText;
+        console.log("PDF extracted text:", extractedText);
+      } else {
+        alert("Selected file is not an image or PDF");
+        return;
+      }
+
+      alert("Text extracted and saved successfully!");
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        console.error("Upload error:", error.response?.data || error.message);
+        console.error("Error:", error.response?.data || error.message);
+        alert(`Error: ${error.response?.data?.error || error.message}`);
+      } else {
+        console.error("Unexpected error:", error);
+        alert("An unexpected error occurred");
       }
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -59,10 +87,10 @@ const Upload = () => {
       <div className="text-right">
         <Button
           className="mt-7 bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
-          disabled={files.length === 0}
+          disabled={files.length === 0 || isProcessing}
           onClick={handleUpload}
         >
-          Run OCR
+          {isProcessing ? "Processing..." : "Run OCR"}
         </Button>
       </div>
     </main>
