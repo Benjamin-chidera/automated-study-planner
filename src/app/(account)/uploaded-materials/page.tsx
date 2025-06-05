@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import UploadedMaterial from "./materials";
 
-const UploadedMaterial = () => {
+const page = () => {
   return (
-    <div>UploadedMaterial</div>
-  )
-}
+    <div>
+      <UploadedMaterial />
+    </div>
+  );
+};
 
-export default UploadedMaterial
+export default page;

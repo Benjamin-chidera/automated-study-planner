@@ -6,7 +6,11 @@ export async function POST(req: NextRequest) {
   try {
     // Parse form data
     const formData = await req.formData();
+
     const file = formData.get("file") as File | null;
+    const user = formData.get("userId") as string | null;
+
+    console.log("User server:", user);
 
     if (!file) {
       console.error("No file uploaded");
@@ -29,21 +33,40 @@ export async function POST(req: NextRequest) {
 
     // Extract text from PDF
     const extractedText = await HandlePDFExtract(file);
-    console.log("Extracted PDF text:", extractedText);
+
+
 
     // Send extracted text to save-text endpoint for storage
-    // await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save-text`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ text: extractedText }),
-    // });
+    try {
+      await fetch(`http://localhost:3000/api/save-text`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          extractedText: extractedText,
+          filename: file.name,
+          userId: user,
+          fileType: "pdf",
+     
+        }),
+      });
 
-    return NextResponse.json(
-      { message: "PDF processed successfully", extractedText },
-      { status: 200 }
-    );
+      return NextResponse.json(
+        { message: "PDF processed successfully", extractedText },
+        { status: 200 }
+      );
+    } catch (error) {
+      console.error("Error saving extracted text:", error);
+      return NextResponse.json(
+        {
+          error: `Error saving extracted text: ${
+            (error as Error).message || "Unknown error"
+          }`,
+        },
+        { status: 500 }
+      );
+    }
   } catch (error: unknown) {
     console.error("API error:", error);
     return NextResponse.json(

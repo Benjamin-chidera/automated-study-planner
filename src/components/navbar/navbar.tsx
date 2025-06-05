@@ -1,10 +1,7 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { Button } from "../ui/button";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
@@ -16,15 +13,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/upload", label: "Upload" },
-  { href: "/summary", label: "Summary" },
-  { href: "/planner", label: "Planner" },
-  // { href: "/profile", label: "Profile" },
-];
+import { NavLink } from "./nav";
+import { Menu } from "./menu";
+import { getAuthUser } from "@/lib/getUser";
+import { logout } from "@/app/actions/auth";
 
 const navProfile = [
   { href: "/profile", label: "Profile" },
@@ -33,9 +25,24 @@ const navProfile = [
   { href: "/completed-plans", label: "Completed Plans" },
 ];
 
-export const Navbar = () => {
-  const pathname = usePathname();
-  const router = useRouter();
+// interface User {
+//   userName: string;
+// }
+
+export const Navbar = async () => {
+  const user = await getAuthUser();
+
+  let initials = "";
+  if (user && typeof user?.userName === "string") {
+    initials = user?.userName
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((word: string) => word[0]?.toUpperCase() || "")
+      .join("");
+  }
+
+  // console.log(initials);
 
   return (
     <main>
@@ -44,70 +51,75 @@ export const Navbar = () => {
         <section>
           <div>
             <Link href={"/"}>
-            <Image src={"/logo.png"} height={150} width={150} alt="logo"/>
+              <Image src={"/logo.jpeg"} height={150} width={150} alt="logo" />
             </Link>
           </div>
         </section>
 
         <section>
-          <div className="md:flex justify-around items-center gap-3">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex flex-col items-center justify-center text-sm font-bold rounded-full h-10 px-4 w-[110px] transition-colors duration-200 ${
-                  pathname === item.href
-                    ? "bg-[#4F46E5] text-[#fff] shadow-lg"
-                    : "text-black hover:bg-gray-100"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
+          <ul className="md:flex justify-around items-center gap-3">
+            <li>
+              <NavLink href="/" label="Home" />
+            </li>
+            <li>
+              <NavLink href="/about" label="About" />
+            </li>
+            {user && (
+              <li>
+                <NavLink href="/upload" label="Upload" />
+              </li>
+            )}
+
+            {user && (
+              <li>
+                <NavLink href="/summary" label="Summary" />
+              </li>
+            )}
+
+            {user && (
+              <li>
+                <NavLink href="/planner" label="Planner" />
+              </li>
+            )}
+          </ul>
         </section>
 
         <section>
           <div className=" flex items-center gap-3">
-            <Button
-              className="bg-[#4F46E5] text-[#fff] shadow-lg h-10 w-[100px] font-bold cursor-pointer rounded-full"
-              onClick={() => router.push("/login")}
-            >
-              Login
-            </Button>
+            {!user && <NavLink href="/login" label="Login" />}
 
             {/* this is for the user avatar section */}
 
-            <DropdownMenu>
-              <DropdownMenuTrigger className=" border-none outline-none cursor-pointer">
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className=" bg-[#4F46E5] text-white w-[170px] space-y-1">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
+            {user && (
+              <DropdownMenu>
+                <DropdownMenuTrigger className=" border-none outline-none cursor-pointer">
+                  <Avatar>
+                    {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
+                    <AvatarFallback className=" text-white bg-[#4F46E5] font-bold">
+                      {initials}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className=" bg-[#4F46E5] text-white w-[170px] space-y-1">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
 
-                {navProfile.map((nav, i) => (
-                  <DropdownMenuItem
-                    key={i}
-                    className={`hover:bg-white hover:text-black hover:font-bold cursor-pointer ${
-                      pathname === nav.href && "bg-white text-black font-bold"
-                    }`}
-                    onClick={() => router.push(`${nav.href}`)}
-                  >
-                    {nav.label}
-                  </DropdownMenuItem>
-                ))}
+                  {navProfile.map((nav, i) => (
+                    <Menu nav={nav} key={i} />
+                  ))}
 
-                {/* this is the logout button */}
+                  {/* this is the logout button */}
 
-                <DropdownMenuItem className="bg-white text-black font-bold cursor-pointer">
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <form action={logout}>
+                    <button className="w-full">
+                      <DropdownMenuItem className="bg-white text-black font-bold cursor-pointer">
+                        Logout
+                      </DropdownMenuItem>
+                    </button>
+                  </form>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         </section>
       </nav>
