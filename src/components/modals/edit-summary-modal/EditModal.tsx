@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,21 +7,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
+import { Textarea } from "../../ui/textarea";
+import { Button } from "../../ui/button";
 import { SquarePen } from "lucide-react";
 
-export const EditModal = ({
-  text,
-  setText,
-}: {
-  text: string;
-  setText: React.Dispatch<React.SetStateAction<string>>;
-}) => {
-  const [draftText, setDraftText] = useState(text);
-
+export const EditModal = ({ text }: { text: string }) => {
   const handleSave = () => {
-    setText(draftText);
+    // setText(draftText);
+
+    console.log("changed text");
   };
 
   return (
@@ -36,15 +30,17 @@ export const EditModal = ({
           <DialogTitle>Edit Summary</DialogTitle>
           <DialogDescription>
             <Textarea
-              value={draftText}
-              onChange={(e) => setDraftText(e.target.value)}
+              defaultValue={text}
               rows={30}
               className="mt-4 h-[300px] resize-none"
             />
           </DialogDescription>
         </DialogHeader>
         <div className="mt-4 flex justify-end">
-          <Button onClick={handleSave} className="bg-[#4F46E5] hover:bg-blue-900 cursor-pointer text-white">
+          <Button
+            onClick={handleSave}
+            className="bg-[#4F46E5] hover:bg-blue-900 cursor-pointer text-white"
+          >
             Save
           </Button>
         </div>

@@ -36,19 +36,13 @@ const Upload = ({ user }: { user: string | undefined }) => {
       if (file instanceof File && file.type.startsWith("image/")) {
         // Handle image OCR in the frontend
         extractedText = await OcrImage(file);
-        // console.log("Image OCR text:", extractedText);
+     
 
-        // call the summary API to get a summary of the text
-
-        // this is the summarization code - model (AI)
-        // const summarizer = await pipeline(
-        //   "summarization",
-        //   "Xenova/bart-large-cnn"
-        // );
-
-        // const summary = await summarizer(extractedText);
-
+        // send summarized text to backend for storage
         const summary = await summarize(extractedText);
+
+        // console.log(summary);
+        
 
         // Send extracted text from the image to backend for storage
         await axios.post("/api/save-text", {
@@ -56,7 +50,7 @@ const Upload = ({ user }: { user: string | undefined }) => {
           userId: user,
           filename: file.name,
           fileType: "image",
-          summaryText: summary[0]?.summary_text,
+          summaryText: summary,
         });
 
         setFiles([]);

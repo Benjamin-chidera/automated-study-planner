@@ -1,26 +1,23 @@
 "use client";
 
-import { EditModal } from "@/components/edit-summary-modal/EditModal";
+import { EditModal } from "@/components/modals/edit-summary-modal/EditModal";
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import React from "react";
 
-// interface MaterialsCardsProps {
-//   _id: string;
-//   createdAt: string;
-//   extractedText: string;
-//   filename: string;
-//   fileType: string;
-// }
+interface MaterialsCardsProps {
+  _id: string;
+  createdAt: string;
+  extractedText: string;
+  filename: string;
+  fileType: string;
+  summaryText: string;
+}
 
-const Details = ({ detailMaterials }: { detailMaterials: any }) => {
-  const [text, setText] = useState(
-    `- The Industrial Revolution started in Great Britain in the late 18th century. 
-- It marked a shift from agriculture to industry, driven by innovations in textiles, steam power, and iron. 
-- Factories and urbanization increased, leading to societal changes and new economic systems. 
-- Key inventions included the power loom, steam engine, and cotton gin, boosting production and growth. 
-- Challenges arose, such as pollution, poor working conditions, and social inequality.`
-  );
-
+const Details = ({
+  detailMaterials,
+}: {
+  detailMaterials: MaterialsCardsProps;
+}) => {
   return (
     <main className="flex justify-between gap-5">
       <section>
@@ -36,13 +33,15 @@ const Details = ({ detailMaterials }: { detailMaterials: any }) => {
           Generated Summary
         </h1>
 
-        <div className="border-2 border-[#FF9800] p-3 h-[700px]">
-          <p className="text-lg max-w-xl whitespace-pre-line">{text}</p>
+        <div className="border-2 border-[#FF9800] p-3 h-[700px] overflow-y-scroll">
+          <p className="text-lg max-w-xl whitespace-pre-line">
+            {detailMaterials?.summaryText}
+          </p>
         </div>
 
         <div className="mt-5 flex justify-between items-center">
           {/* Pass down state to EditModal */}
-          <EditModal text={text} setText={setText} />
+          <EditModal text={detailMaterials?.summaryText} />
 
           <Button className="bg-[#4F46E5]  text-white cursor-pointer">
             Generate Study

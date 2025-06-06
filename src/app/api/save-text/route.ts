@@ -1,7 +1,12 @@
 import { connectDB } from "@/lib/connect";
 import { Upload } from "@/models/upload";
 import { NextResponse, NextRequest } from "next/server";
-import { pipeline } from "@xenova/transformers";
+// import { pipeline } from "@xenova/transformers";
+
+// import { GoogleGenAI } from "@google/genai";
+import { summarize } from "@/lib/summarizer";
+
+// const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export async function POST(req: NextRequest) {
   const { extractedText, filename, userId, fileType } = await req.json();
@@ -11,10 +16,9 @@ export async function POST(req: NextRequest) {
     await connectDB();
 
     // this is the summarization code - model (AI)
-    const summarizer = await pipeline("summarization", "Xenova/bart-large-cnn");
+    const summary = await summarize(extractedText);
 
-    const summary = await summarizer(extractedText);
-    // console.log(summary);
+    // console.log("Save-text-api: ", summary);
 
     // Save the text to the database
     const saved = new Upload({
@@ -22,7 +26,7 @@ export async function POST(req: NextRequest) {
       filename,
       userId,
       fileType,
-      summaryText: summary[0]?.summary_text,
+      summaryText: summary,
     });
     await saved.save();
 
