@@ -5,3 +5,10 @@ export type RegisterErrors = {
   password?: string[];
   general?: string[];
 };
+
+
+export type LoginErrors = {
+  email?: string[];
+  password?: string[];
+  general?: string[];
+};

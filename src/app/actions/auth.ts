@@ -4,13 +4,16 @@ import { connectDB } from "@/lib/connect";
 import { LoginSchema, RegistrationsSchema } from "@/lib/rules";
 import { createSession, deleteSession } from "@/lib/session";
 import { User } from "@/models/user";
-import { RegisterErrors } from "@/types/register";
+import { LoginErrors, RegisterErrors } from "@/types/register";
 import { FormState } from "@/types/rules";
 
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 
-export const register = async (state: FormState, formData: FormData): Promise<{ errors?: RegisterErrors; email?: string }> => {
+export const register = async (
+  state: FormState,
+  formData: FormData
+): Promise<{ errors?: RegisterErrors; email?: string }> => {
   try {
     const fullname = formData.get("fullname")?.toString() || "";
     const email = formData.get("email")?.toString() || "";
@@ -67,21 +70,25 @@ export const register = async (state: FormState, formData: FormData): Promise<{ 
   return redirect("/upload");
 };
 
-export const login = async (state: FormState, formData: FormData) => {
+export const login = async (
+  state: FormState,
+  formData: FormData
+): Promise<{ errors?: LoginErrors; email?: string }> => {
   try {
+    const email = formData.get("email")?.toString() || "";
+    const password = formData.get("password")?.toString() || "";
+
     const validatedFields = LoginSchema.safeParse({
-      email: formData.get("email"),
-      password: formData.get("password"),
+      email,
+      password,
     });
 
     if (!validatedFields.success) {
       return {
         errors: validatedFields.error.flatten().fieldErrors,
-        email: formData.get("email"),
+        email,
       };
     }
-
-    const { email, password } = validatedFields.data;
 
     // connect to database
     await connectDB();
@@ -102,7 +109,7 @@ export const login = async (state: FormState, formData: FormData) => {
     if (!isMatch) {
       return {
         errors: { password: ["Password is incorrect"] },
-        password,
+        email,
       };
     }
 

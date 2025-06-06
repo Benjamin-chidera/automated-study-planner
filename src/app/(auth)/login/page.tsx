@@ -32,7 +32,7 @@ const LoginPage = () => {
               id="email"
               placeholder="Email"
               name="email"
-              defaultValue={state?.email}
+              defaultValue={state?.email as string}
               className="focus:outline-none focus:ring-0 focus:ring-[#4F46E5] focus:border-[#4F46E5] focus:border-0"
             />
             {state?.errors?.email && (
