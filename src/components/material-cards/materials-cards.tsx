@@ -3,19 +3,21 @@ import {
   Card,
   CardAction,
   CardContent,
-  CardDescription,
-  CardFooter,
+  // CardDescription,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
 
 export interface MaterialsCardsProps {
-  _id: string;
-  createdAt: string;
-  extractedText: string;
-  filename: string;
-  fileType: string;
+  material: {
+    _id: string;
+    createdAt: string;
+    extractedText: string;
+    filename: string;
+    fileType: string;
+  };
 }
 
 export const MaterialsCards = ({ material }: MaterialsCardsProps) => {

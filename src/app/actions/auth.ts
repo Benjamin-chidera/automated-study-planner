@@ -4,27 +4,32 @@ import { connectDB } from "@/lib/connect";
 import { LoginSchema, RegistrationsSchema } from "@/lib/rules";
 import { createSession, deleteSession } from "@/lib/session";
 import { User } from "@/models/user";
+import { RegisterErrors } from "@/types/register";
 import { FormState } from "@/types/rules";
 
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 
-export const register = async (state: FormState, formData: FormData) => {
+export const register = async (state: FormState, formData: FormData): Promise<{ errors?: RegisterErrors; email?: string }> => {
   try {
+    const fullname = formData.get("fullname")?.toString() || "";
+    const email = formData.get("email")?.toString() || "";
+    const password = formData.get("password")?.toString() || "";
+
     const validatedFields = RegistrationsSchema.safeParse({
-      fullname: formData.get("fullname"),
-      email: formData.get("email"),
-      password: formData.get("password"),
+      fullname,
+      email,
+      password,
     });
 
     if (!validatedFields.success) {
       return {
         errors: validatedFields.error.flatten().fieldErrors,
-        email: formData.get("email"),
+        email,
       };
     }
 
-    const { fullname, email, password } = validatedFields.data;
+    // const { fullname, email, password } = validatedFields.data;
     // connect to database
     await connectDB();
 

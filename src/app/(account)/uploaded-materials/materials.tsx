@@ -7,7 +7,7 @@ import React from "react";
 const UploadedMaterial = async () => {
   const materials = await getMyUploadedStudyMaterials();
 
-  console.log(materials);
+  // console.log(materials);
 
   return (
     <main>

@@ -11,7 +11,6 @@ import { register } from "@/app/actions/auth";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, action, pending] = useActionState(register, undefined);
 
   console.log(state);
@@ -36,7 +35,7 @@ const RegisterPage = () => {
               className="focus:outline-none focus:ring-0 focus:ring-[#4F46E5] focus:border-[#4F46E5] focus:border-0"
             />
 
-            {state?.errors?.email && (
+            {state?.errors?.fullname && (
               <p className=" text-red-500 text-xs">{state?.errors?.fullname}</p>
             )}
           </div>
@@ -48,7 +47,7 @@ const RegisterPage = () => {
               id="email"
               placeholder="Email"
               name="email"
-              defaultValue={state?.email}
+              defaultValue={state?.email as string}
               className="focus:outline-none focus:ring-0 focus:ring-[#4F46E5] focus:border-[#4F46E5] focus:border-0"
             />
             {state?.errors?.email && (
