@@ -70,11 +70,11 @@ export const Navbar = async () => {
               </li>
             )}
 
-            {user && (
+            {/* {user && (
               <li>
                 <NavLink href="/summary" label="Summary" />
               </li>
-            )}
+            )} */}
 
             {user && (
               <li>

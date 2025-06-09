@@ -36,13 +36,11 @@ const Upload = ({ user }: { user: string | undefined }) => {
       if (file instanceof File && file.type.startsWith("image/")) {
         // Handle image OCR in the frontend
         extractedText = await OcrImage(file);
-     
 
         // send summarized text to backend for storage
         const summary = await summarize(extractedText);
 
         // console.log(summary);
-        
 
         // Send extracted text from the image to backend for storage
         await axios.post("/api/save-text", {

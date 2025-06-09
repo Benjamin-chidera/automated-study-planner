@@ -17,7 +17,6 @@ export const getMyUploadedStudyMaterials = async () => {
 export const getMaterialDetail = async (id: string) => {
   try {
     const upload = await Upload.findById(id);
-    // return upload; // console.log(upload);
 
     if (!upload) return null;
 

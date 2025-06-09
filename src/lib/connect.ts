@@ -1,12 +1,19 @@
 import mongoose from "mongoose";
 
+let isConnected = false;
+
 export const connectDB = async () => {
+  if (isConnected) return;
+
   try {
-    await mongoose.connect(process.env.MONGODB_URI!, {
+    const db = await mongoose.connect(process.env.MONGODB_URI!, {
       dbName: "study-planner",
     });
-    console.log(`server listening`);
+
+    isConnected = true;
+    console.log("✅ MongoDB connected:", db.connection.host);
   } catch (error) {
-    console.log(error);
+    console.error("❌ MongoDB connection error:", error);
+    throw new Error("Failed to connect to MongoDB");
   }
 };

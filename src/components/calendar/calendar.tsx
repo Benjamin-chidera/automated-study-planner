@@ -51,17 +51,17 @@ export const Calendar = () => {
           editable={true}
           selectable={true}
           droppable={true}
-        //   select={(info) => {
-        //     const title = prompt("What do you want to study?");
-        //     if (title) {
-        //       info.view.calendar.addEvent({
-        //         title,
-        //         start: info.startStr,
-        //         end: info.endStr,
-        //         allDay: false,
-        //       });
-        //     }
-        //   }}
+          //   select={(info) => {
+          //     const title = prompt("What do you want to study?");
+          //     if (title) {
+          //       info.view.calendar.addEvent({
+          //         title,
+          //         start: info.startStr,
+          //         end: info.endStr,
+          //         allDay: false,
+          //       });
+          //     }
+          //   }}
           drop={(info) => {
             const title = info.draggedEl.getAttribute("data-title");
             const date = info.dateStr;

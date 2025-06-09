@@ -1,29 +1,35 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
 interface Planner {
   userId: mongoose.Types.ObjectId;
-  summaryId: mongoose.Types.ObjectId; // Link to Summary
-  title: string;
+  uploadId: mongoose.Types.ObjectId; // Link to Summary
   studyPlan: {
     topic: string;
-    description: string;
     dueDate?: Date;
   }[];
-  createdAt: Date;
+
+  status: string; // active, inactive, completed
 }
 
-const plannerSchema = new Schema<Planner>({
-  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  summaryId: { type: Schema.Types.ObjectId, ref: "Summary", required: true },
-  title: { type: String, required: true },
-  studyPlan: [
-    {
-      topic: { type: String, required: true },
-      description: { type: String },
-      dueDate: { type: Date },
+const plannerSchema = new Schema<Planner>(
+  {
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    uploadId: { type: Schema.Types.ObjectId, ref: "Upload", required: true },
+    studyPlan: [
+      {
+        topic: { type: String, required: true },
+        dueDate: { type: Date },
+      },
+    ],
+    status: {
+      type: String,
+      default: "inactive",
+      enum: ["active", "inactive", "completed"],
     },
-  ],
-  createdAt: { type: Date, default: Date.now },
-});
+  },
+  {
+    timestamps: true,
+  }
+);
 
-export const Planner = mongoose.model<Planner>("Planner", plannerSchema);
+export const Planner = models.Planner || model<Planner>("Planner", plannerSchema);

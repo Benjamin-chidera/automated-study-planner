@@ -63,10 +63,16 @@ export const register = async (
 
     // user is authenticated, create a session for them
     await createSession(savedUser._id.toString(), savedUser.fullname);
+
+    // send a welcome email to the user
+    // welcomeEmail(fullname, email);
   } catch (error) {
     console.error(error);
     return { errors: { general: ["Something went wrong. Please try again."] } };
   }
+
+  // call n8n to send a welcome email
+
   return redirect("/upload");
 };
 
