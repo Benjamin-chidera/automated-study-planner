@@ -34,8 +34,6 @@ export async function POST(req: NextRequest) {
     // Extract text from PDF
     const extractedText = await HandlePDFExtract(file);
 
-
-
     // Send extracted text to save-text endpoint for storage
     try {
       await fetch(`http://localhost:3000/api/save-text`, {
@@ -48,7 +46,6 @@ export async function POST(req: NextRequest) {
           filename: file.name,
           userId: user,
           fileType: "pdf",
-     
         }),
       });
 

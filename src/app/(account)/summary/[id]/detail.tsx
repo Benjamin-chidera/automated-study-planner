@@ -21,6 +21,8 @@ interface DetailsProps {
 }
 
 const Details: React.FC<DetailsProps> = ({ detailMaterials, user }) => {
+  // const router = useRouter()
+  // function to handle generate study plan
   const handleGeneratePlan = async () => {
     try {
       const { data } = await axios.post("/api/generate-study-plan", {
@@ -28,6 +30,15 @@ const Details: React.FC<DetailsProps> = ({ detailMaterials, user }) => {
         userId: user,
       });
       console.log(data);
+
+      // if (data.status === 200) {
+      //   router.push(``)
+      // }
+
+      if (data?.success) {
+        // Redirect to calendar page with upload ID
+        window.location.href = `/planner?uploadId=${detailMaterials._id}`;
+      }
     } catch (error) {
       console.error("Error generating plan:", error);
     }

@@ -8,15 +8,18 @@ import axios, { AxiosError } from "axios";
 import OcrImage from "@/components/ocr/ocr-image";
 
 import { summarize } from "@/lib/summarizer";
+import { useRouter } from "next/navigation";
 
 const Upload = ({ user }: { user: string | undefined }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
+  const router = useRouter();
 
   const handleFilesAccepted = (acceptedFiles: File[]) => {
     setFiles(acceptedFiles.slice(0, 1));
   };
 
+  // handle file upload
   const handleUpload = async () => {
     if (files.length === 0) {
       alert("No files selected");
@@ -43,7 +46,7 @@ const Upload = ({ user }: { user: string | undefined }) => {
         // console.log(summary);
 
         // Send extracted text from the image to backend for storage
-        await axios.post("/api/save-text", {
+        const data = await axios.post("/api/save-text", {
           extractedText: extractedText,
           userId: user,
           filename: file.name,
@@ -52,14 +55,22 @@ const Upload = ({ user }: { user: string | undefined }) => {
         });
 
         setFiles([]);
+
+        if (data.status === 200) {
+          router.push("/uploaded-materials");
+        }
       } else if (file instanceof File && file.type === "application/pdf") {
         // Send PDF to backend for text extraction
-        await axios.post("/api/upload", formData, {
+        const data = await axios.post("/api/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
         setFiles([]);
+
+        if (data.status === 200) {
+          router.push("/uploaded-materials");
+        }
         // extractedText = data.extractedText;
         // console.log("PDF extracted text:", extractedText);
       } else {

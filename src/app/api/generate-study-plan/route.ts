@@ -46,7 +46,10 @@ export async function POST(req: NextRequest) {
 
     await plan.save();
 
-    return NextResponse.json({ success: true, studyPlan: parsedPlan });
+    return NextResponse.json(
+      { success: true, studyPlan: parsedPlan },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error in generate-study-plan:", error);
     return NextResponse.json(

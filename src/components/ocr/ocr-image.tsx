@@ -7,7 +7,7 @@ export default async function OcrImage(file: File): Promise<string> {
     const {
       data: { text },
     } = await worker.recognize(file);
-    console.log("OCR result:", text);
+    // console.log("OCR result:", text);
     return text;
   } finally {
     await worker.terminate();
