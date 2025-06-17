@@ -7,6 +7,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
 import { EventDropArg } from "@fullcalendar/core/index.js";
+import { useRouter } from "next/navigation";
 
 // Define the event type for TypeScript
 interface CalendarEvent {
@@ -26,24 +27,25 @@ interface CalendarProps {
 
 export const Calendar = ({ events, uploadId, initialDate }: CalendarProps) => {
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter()
 
   // Transform events to FullCalendar format
   const formattedEvents = useMemo(() => {
     const mappedEvents =
       events?.map((event) => {
         const start = new Date(event.dueDate);
-        console.log("Event mapping:", {
-          id: event._id,
-          title: event.topic,
-          start,
-        }); // Debug
+        // console.log("Event mapping:", {
+        //   id: event._id,
+        //   title: event.topic,
+        //   start,
+        // }); // Debug
         return {
           id: event._id,
           title: event.topic,
           start,
         };
       }) || [];
-    console.log("Formatted events:", mappedEvents); // Debug
+    // console.log("Formatted events:", mappedEvents); // Debug
     return mappedEvents;
   }, [events]);
 
@@ -68,6 +70,8 @@ export const Calendar = ({ events, uploadId, initialDate }: CalendarProps) => {
         );
         console.log("Event updated:", response.data);
         setError(null);
+        router.refresh();
+        // window.location.reload();
       } catch (error) {
         console.error("Failed to update event:", error);
         setError("Failed to update event due date");

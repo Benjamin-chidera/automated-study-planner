@@ -8,3 +8,16 @@ export type FormState =
       message?: string;
     }
   | undefined;
+
+// src/types/rules.ts
+// src/types/rules.ts
+export interface FormStates {
+  message: string;
+  errors?: {
+    user?: string;
+    oldPassword?: string;
+    name?: string[] | string;
+    email?: string[] | string;
+    password?: string[] | string;
+  };
+}

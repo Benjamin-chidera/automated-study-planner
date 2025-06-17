@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,18 +10,33 @@ import {
 import { Textarea } from "../../ui/textarea";
 import { Button } from "../../ui/button";
 import { SquarePen } from "lucide-react";
+import axios from "axios";
+import { toast } from "sonner";
 
-export const EditModal = ({ text }: { text: string }) => {
-  const handleSave = () => {
-    // setText(draftText);
+export const EditModal = ({ text, id }: { text: string; id: string }) => {
+  const [editedText, setEditedText] = useState(text); // use state for changes
 
-    console.log("changed text");
+  const handleSave = async () => {
+    try {
+      const { data } = await axios.patch(
+        `/api/summary-edit/684d98d40099f211d4227641`,
+        {
+          newSummary: editedText,
+        }
+      );
+
+      console.log("Updated summary:", data);
+      toast.success("Summary updated successfully!");
+    } catch (error) {
+      console.error("Error updating summary:", error);
+      toast.error("Failed to update summary. Please try again.");
+    }
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-[#4F46E5]  text-white cursor-pointer">
+        <Button className="bg-[#4F46E5] text-white cursor-pointer">
           <SquarePen />
         </Button>
       </DialogTrigger>
@@ -30,8 +45,10 @@ export const EditModal = ({ text }: { text: string }) => {
           <DialogTitle>Edit Summary</DialogTitle>
           <DialogDescription>
             <Textarea
-              defaultValue={text}
+              value={editedText}
+              onChange={(e) => setEditedText(e.target.value)}
               rows={30}
+              name="summary"
               className="mt-4 h-[300px] resize-none"
             />
           </DialogDescription>

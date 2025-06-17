@@ -7,7 +7,7 @@ export const getMyUploadedStudyMaterials = async () => {
   const user = await getAuthUser();
 
   try {
-    const uploads = await Upload.find({ userId: user?.userId });
+    const uploads = await Upload.find({ userId: user?.userId }).sort({ createdAt: -1 });
     return uploads; // console.log(uploads);
   } catch (error) {
     console.log(error);

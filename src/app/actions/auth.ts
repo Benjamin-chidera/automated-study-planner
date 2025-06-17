@@ -62,7 +62,7 @@ export const register = async (
     // console.log(savedUser._id.toString());
 
     // user is authenticated, create a session for them
-    await createSession(savedUser._id.toString(), savedUser.fullname);
+    await createSession(savedUser._id.toString(), savedUser.fullname, savedUser.email);
 
     // send a welcome email to the user
     // welcomeEmail(fullname, email);
@@ -120,7 +120,7 @@ export const login = async (
     }
 
     // user is authenticated, create a session for them
-    await createSession(user._id.toString(), user.fullname);
+    await createSession(user._id.toString(), user.fullname, user.email);
   } catch (error) {
     console.error(error);
     return { errors: { general: ["Something went wrong. Please try again."] } };

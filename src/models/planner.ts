@@ -9,6 +9,7 @@ interface Planner {
   }[];
 
   status: string; // active, inactive, completed
+  hasGeneratedAStudyPlan: boolean; // Whether a study plan has been generated for this upload
 }
 
 const plannerSchema = new Schema<Planner>(
@@ -23,13 +24,15 @@ const plannerSchema = new Schema<Planner>(
     ],
     status: {
       type: String,
-      default: "inactive",
-      enum: ["active", "inactive", "completed"],
+      default: "active",
+      enum: ["active", "completed"],
     },
+    hasGeneratedAStudyPlan: { type: Boolean, default: false },
   },
   {
     timestamps: true,
   }
 );
 
-export const Planner = models.Planner || model<Planner>("Planner", plannerSchema);
+export const Planner =
+  models.Planner || model<Planner>("Planner", plannerSchema);

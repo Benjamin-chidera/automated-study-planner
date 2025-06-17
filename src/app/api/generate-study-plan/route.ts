@@ -44,6 +44,14 @@ export async function POST(req: NextRequest) {
       userId,
     });
 
+    console.log(plan);
+
+    await Upload.findByIdAndUpdate(uploadId, {
+      $set: { hasGeneratedAStudyPlan: true },
+    });
+
+    plan.hasGeneratedAStudyPlan = true;
+
     await plan.save();
 
     return NextResponse.json(
@@ -56,5 +64,29 @@ export async function POST(req: NextRequest) {
       { error: "Internal server error" },
       { status: 500 }
     );
+  }
+}
+
+// check if hasGeneratedAStudyPlan is true in upload schema
+
+export async function GET(req: NextRequest) {
+  try {
+    const url = new URL(req.url);
+    const uploadId = url.searchParams.get("uploadId");
+
+    const getPlan = await Upload.findById(uploadId);
+
+    if (!getPlan) {
+      return NextResponse.json({ error: "Upload not found" }, { status: 404 });
+    }
+
+    console.log(getPlan.hasGeneratedAStudyPlan);
+
+    return NextResponse.json(
+      { success: true, hasGeneratedAStudyPlan: getPlan.hasGeneratedAStudyPlan },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log("Error in generate-study-plan:", error);
   }
 }

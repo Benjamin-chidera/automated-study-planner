@@ -57,7 +57,10 @@ export async function PATCH(req: NextRequest) {
         { status: 404 }
       );
     }
-    // revalidatePath("/")
+
+    // console.log("Revalidating path:", `/planner?uploadId=${uploadId}`);
+    // revalidatePath(`/planner?uploadId=${uploadId}`);
+  
 
     return NextResponse.json(
       { message: "Event due date updated successfully" },
@@ -70,5 +73,4 @@ export async function PATCH(req: NextRequest) {
       { status: 500 }
     );
   }
-
 }

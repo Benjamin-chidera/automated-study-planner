@@ -20,7 +20,7 @@ const LoginPage = () => {
   };
 
   return (
-    <main className="flex justify-center items-center gap-7">
+    <main className="lg:flex justify-center items-center gap-7">
       <section className="flex-1">
         <h1 className=" font-bold text-4xl mb-10">Welcome Back</h1>
 

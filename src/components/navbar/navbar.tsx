@@ -17,6 +17,7 @@ import { NavLink } from "./nav";
 import { Menu } from "./menu";
 import { getAuthUser } from "@/lib/getUser";
 import { logout } from "@/app/actions/auth";
+import { MobileBottomNav } from "./mobile-bottom-nav";
 
 const navProfile = [
   { href: "/profile", label: "Profile" },
@@ -24,10 +25,6 @@ const navProfile = [
   { href: "/existing-plans", label: "Exiting Plans" },
   { href: "/completed-plans", label: "Completed Plans" },
 ];
-
-// interface User {
-//   userName: string;
-// }
 
 export const Navbar = async () => {
   const user = await getAuthUser();
@@ -46,8 +43,8 @@ export const Navbar = async () => {
 
   return (
     <main>
-      {/* top nav */}
-      <nav className="hidden fixed top-5 left-1/2 transform -translate-x-1/2 z-50 bg-[#FFFFFF] rounded-full shadow-lg md:flex justify-between px-5 items-center h-16 w-9/12  border border-gray-200">
+      {/* top nav for mobile */}
+      <nav className="hidden fixed top-5 left-1/2 transform -translate-x-1/2 z-50 md:bg-[#FFFFFF] rounded-full shadow-lg md:flex justify-between px-5 items-center h-16 w-11/12 md:w-10/12 lg:w-9/12 mx-auto border border-gray-200">
         <section>
           <div>
             <Link href={"/"}>
@@ -69,18 +66,9 @@ export const Navbar = async () => {
                 <NavLink href="/upload" label="Upload" />
               </li>
             )}
-
-            {/* {user && (
               <li>
-                <NavLink href="/summary" label="Summary" />
-              </li>
-            )} */}
-
-            {user && (
-              <li>
-                <NavLink href="/planner" label="Planner" />
-              </li>
-            )}
+              <NavLink href="/contact" label="Contact" />
+            </li>
           </ul>
         </section>
 
@@ -122,6 +110,61 @@ export const Navbar = async () => {
             )}
           </div>
         </section>
+      </nav>
+
+      {/* mobile top nav */}
+
+      <div className="md:hidden fixed top-5 left-1/2 transform -translate-x-1/2 z-50 flex justify-between px-5 items-center h-16 mx-auto  w-full ">
+        <section>
+          <div>
+            <Link href={"/"}>
+              <Image src={"/logo.jpeg"} height={150} width={150} alt="logo" />
+            </Link>
+          </div>
+        </section>
+
+        <section>
+          <div className=" flex items-center gap-3">
+            {!user && <NavLink href="/login" label="Login" />}
+
+            {/* this is for the user avatar section */}
+
+            {user && (
+              <DropdownMenu>
+                <DropdownMenuTrigger className=" border-none outline-none cursor-pointer">
+                  <Avatar>
+                    {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
+                    <AvatarFallback className=" text-white bg-[#4F46E5] font-bold">
+                      {initials}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className=" bg-[#4F46E5] text-white w-[170px] space-y-1">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+
+                  {navProfile.map((nav, i) => (
+                    <Menu nav={nav} key={i} />
+                  ))}
+
+                  {/* this is the logout button */}
+
+                  <form action={logout}>
+                    <button className="w-full">
+                      <DropdownMenuItem className="bg-white text-black font-bold cursor-pointer">
+                        Logout
+                      </DropdownMenuItem>
+                    </button>
+                  </form>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
+        </section>
+      </div>
+
+      <nav>
+        <MobileBottomNav />
       </nav>
     </main>
   );

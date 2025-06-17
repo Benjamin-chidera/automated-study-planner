@@ -9,6 +9,7 @@ import OcrImage from "@/components/ocr/ocr-image";
 
 import { summarize } from "@/lib/summarizer";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const Upload = ({ user }: { user: string | undefined }) => {
   const [files, setFiles] = useState<File[]>([]);
@@ -57,7 +58,14 @@ const Upload = ({ user }: { user: string | undefined }) => {
         setFiles([]);
 
         if (data.status === 200) {
-          router.push("/uploaded-materials");
+          toast.success("PDF uploaded successfully!");
+
+          const timeout = setTimeout(() => {
+            router.push("/uploaded-materials");
+          }, 2000);
+
+          // clear timeout after 2 seconds
+          return () => clearTimeout(timeout);
         }
       } else if (file instanceof File && file.type === "application/pdf") {
         // Send PDF to backend for text extraction
@@ -69,28 +77,38 @@ const Upload = ({ user }: { user: string | undefined }) => {
         setFiles([]);
 
         if (data.status === 200) {
-          router.push("/uploaded-materials");
+          toast.success("PDF uploaded successfully!");
+
+          const timeout = setTimeout(() => {
+            router.push("/uploaded-materials");
+          }, 2000);
+
+          // clear timeout after 2 seconds
+          return () => clearTimeout(timeout);
         }
-        // extractedText = data.extractedText;
-        // console.log("PDF extracted text:", extractedText);
       } else {
-        alert("Selected file is not an image or PDF");
+        // alert("Selected file is not an image or PDF");
+        toast.error("Selected file is not an image or PDF");
         return;
       }
 
       //   change to a success message (modal)
-      alert("Text extracted and saved successfully!");
+      // return <Toast />;
+      // toast.success("Text extracted and saved successfully!");
+      // alert("Text extracted and saved successfully!");
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         console.error("Error:", error.response?.data || error.message);
 
         // change to an error message (modal)
-        alert(`Error: ${error.response?.data?.error || error.message}`);
+        // alert(`Error: ${error.response?.data?.error || error.message}`);
+        toast.error(`Error: ${error.response?.data?.error || error.message}`);
       } else {
         console.error("Unexpected error:", error);
 
         // change to an error message (modal)
-        alert("An unexpected error occurred");
+        // alert("An unexpected error occurred");
+        toast.error("An unexpected error occurred");
       }
     } finally {
       setIsProcessing(false);

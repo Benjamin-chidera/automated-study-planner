@@ -1,13 +1,12 @@
-import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
-  
   return (
-    <main>
+    <main className="">
       {/* hero section */}
-      <section className="relative h-[500px] w-full">
+      <section className="relative h-[500px]">
         <Image
           src="/hero-img.jpg"
           alt="Hero image"
@@ -25,14 +24,17 @@ export default function Home() {
             Upload your screenshots, get a smart study plan.
           </p>
 
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white w-40 h-10 mt-5 z-10 shadow-md transition duration-300 cursor-pointer font-bold">
+          <Link
+            href={"/upload"}
+            className="bg-blue-600 hover:bg-blue-700 text-white w-40 h-10 flex items-center justify-center rounded-sm mt-5 z-10 shadow-md transition duration-300 cursor-pointer font-bold"
+          >
             Start Planning
-          </Button>
+          </Link>
         </div>
       </section>
 
       {/* how it works */}
-      <section className=" mt-7 px-4">
+      <section className=" mt-7">
         <h1 className="font-bold text-2xl mb-6 text-left text-gray-800">
           How It Works
         </h1>
@@ -73,7 +75,7 @@ export default function Home() {
 
       {/* why use this app */}
 
-      <section className=" mt-10 px-4">
+      <section className=" mt-10">
         <h1 className="font-bold text-2xl mb-6 text-left text-gray-800 capitalize">
           Why use this app
         </h1>
@@ -115,9 +117,14 @@ export default function Home() {
           Get started today and experience the power of AI-driven study planing
         </p>
 
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white w-40 h-10 mt-5 z-10 shadow-md transition duration-300 cursor-pointer font-bold">
-          Start Planning
-        </Button>
+        <div className="flex justify-center mt-5">
+          <Link
+            href={"/upload"}
+            className="bg-blue-600 hover:bg-blue-700 text-white w-40 h-10 flex items-center justify-center rounded-sm mt-5 z-10 shadow-md transition duration-300 cursor-pointer font-bold"
+          >
+            Start Planning
+          </Link>
+        </div>
       </section>
     </main>
   );

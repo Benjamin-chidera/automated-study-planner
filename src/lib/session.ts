@@ -31,9 +31,9 @@ export async function decrypt(session: string | undefined = "") {
   }
 }
 
-export async function createSession(userId: string, userName: string) {
+export async function createSession(userId: string, userName: string, userEmail: string) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // this gives us a date 7 days from now
-  const session = await encrypt({ userId, expiresAt, userName });
+  const session = await encrypt({ userId, expiresAt, userName, userEmail });
 
   // console.log("this is the session:", session);
 

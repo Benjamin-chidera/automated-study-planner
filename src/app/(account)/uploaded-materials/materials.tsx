@@ -1,7 +1,7 @@
 import { getMyUploadedStudyMaterials } from "@/app/actions/study-materials";
 import { MaterialsCards } from "@/components/material-cards/materials-cards";
-import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 const UploadedMaterial = async () => {
@@ -16,16 +16,19 @@ const UploadedMaterial = async () => {
           Uploaded Study Material
         </h1>
 
-        <Button className="bg-blue-600 text-white rounded-md px-4 py-2 md:px-6 md:py-5 cursor-pointer font-bold">
+        <Link
+          href={"/upload"}
+          className="bg-blue-600 text-white rounded-md px-4 py-2 md:px-4 md:py-3 cursor-pointer font-bold text-sm flex items-center space-x-2"
+        >
           <Plus /> <p className="hidden md:block">Create a new plan</p>
-        </Button>
+        </Link>
       </div>
 
       {/* list of uploaded materials */}
 
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-7 gap-4">
         {materials?.map((material) => (
-          <MaterialsCards material={material} key={material._id}/>
+          <MaterialsCards material={material} key={material._id} />
         ))}
       </section>
     </main>

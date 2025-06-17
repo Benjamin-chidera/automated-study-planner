@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar/navbar";
+import { Toaster } from "@/components/ui/sonner";
+import React from "react";
 // import { Footer } from "@/components/footer/footer";
 
 const geistSans = Geist({
@@ -29,12 +31,25 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main className=" flex flex-col h-screen md:w-9/12 mx-auto">
+        <main className="flex flex-col h-screen  w-11/12 md:w-10/12 lg:w-9/12 mx-auto">
           <Navbar />
-          <div className=" grow mt-32 pb-10">{children}</div>
+          <div className=" grow mt-24 md:mt-26 pb-10">{children}</div>
 
           {/* <Footer /> */}
         </main>
+
+        <div>
+          <Toaster
+            position="top-right"
+            richColors // enables better styling
+            theme="light" // or "dark"
+            toastOptions={{
+              classNames: {
+                toast: "bg-blue-600 text-white",
+              },
+            }}
+          />
+        </div>
       </body>
     </html>
   );
