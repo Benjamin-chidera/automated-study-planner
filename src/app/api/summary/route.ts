@@ -1,4 +1,4 @@
-import { Upload } from "@/models/upload";
+// import { Upload } from "@/models/upload";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
