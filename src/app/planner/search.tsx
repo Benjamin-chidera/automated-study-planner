@@ -1,13 +1,13 @@
-import { useSearchParams } from "next/navigation";
-import PlannerPage from "./page";
+// import { useSearchParams } from "next/navigation";
+// import PlannerPage from "./page";
 
-const Search = () => {
-  const searchParams = useSearchParams();
-  const uploadId = searchParams.get("uploadId");
+// const Search = () => {
+//   const searchParams = useSearchParams();
+//   const uploadId = searchParams.get("uploadId");
 
-//   console.log(uploadId);
+// //   console.log(uploadId);
 
-  return <PlannerPage searchParams={{ uploadId }} />; 
-};
+//   return <PlannerPage searchParams={{ uploadId }} />; 
+// };
 
-export default Search;
+// export default Search;

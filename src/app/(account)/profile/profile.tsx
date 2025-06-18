@@ -11,16 +11,11 @@ import Image from "next/image";
 import React, { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
-const Profile = ({
-  user,
-}: {
-  user: {
-    userName: string;
-    userEmail: string;
-    userId: string;
-    user: SessionPayload | undefined;
-  };
-}) => {
+interface ProfileProps {
+  user: SessionPayload | undefined;
+}
+
+const Profile = ({ user }: ProfileProps) => {
   const [image, setImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [state, action, pending] = useActionState<

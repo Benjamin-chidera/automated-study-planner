@@ -1,7 +1,6 @@
 export interface SessionPayload {
   userId: string;
-//   email: string;
-//   fullname: string;
+  userName: string;
+  userEmail: string;
   expiresAt: string | Date;
-  // add any other custom claims
 }
