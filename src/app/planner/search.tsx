@@ -7,7 +7,7 @@ const Search = () => {
 
 //   console.log(uploadId);
 
-  return <PlannerPage searchParams={{ uploadId }} />;
+  return <PlannerPage searchParams={{ uploadId }} />; 
 };
 
 export default Search;

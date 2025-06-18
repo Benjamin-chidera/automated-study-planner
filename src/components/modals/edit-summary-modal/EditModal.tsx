@@ -16,10 +16,12 @@ import { toast } from "sonner";
 export const EditModal = ({ text, id }: { text: string; id: string }) => {
   const [editedText, setEditedText] = useState(text); // use state for changes
 
+  // console.log(id);
+
   const handleSave = async () => {
     try {
       const { data } = await axios.patch(
-        `/api/summary-edit/684d98d40099f211d4227641`,
+        `/api/summary-edit/${id}`,
         {
           newSummary: editedText,
         }
