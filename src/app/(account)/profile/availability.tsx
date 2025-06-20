@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 
-type AvailabilityType = "study" | "break" | "flexible";
+type AvailabilityType = "study" | "break";
 
 interface TimeBlock {
   id: string;
@@ -58,55 +58,11 @@ const AVAILABILITY_TYPES = {
     icon: Coffee,
     label: "Break/DND",
   },
-  flexible: {
-    color: "bg-yellow-100 border-yellow-300 text-yellow-800",
-    icon: Clock,
-    label: "Flexible",
-  },
 };
 
 export default function Availability() {
-  const [selectedDays, setSelectedDays] = useState<string[]>([
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-  ]);
-  const [timeBlocks, setTimeBlocks] = useState<TimeBlock[]>([
-    {
-      id: "1",
-      day: "Monday",
-      startTime: "08:00",
-      endTime: "10:00",
-      type: "study",
-      label: "Morning Study",
-    },
-    {
-      id: "2",
-      day: "Monday",
-      startTime: "12:00",
-      endTime: "13:00",
-      type: "break",
-      label: "Lunch Break",
-    },
-    {
-      id: "3",
-      day: "Tuesday",
-      startTime: "14:00",
-      endTime: "16:00",
-      type: "study",
-      label: "Afternoon Study",
-    },
-    {
-      id: "4",
-      day: "Wednesday",
-      startTime: "17:00",
-      endTime: "18:00",
-      type: "break",
-      label: "Gym Time",
-    },
-  ]);
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [timeBlocks, setTimeBlocks] = useState<TimeBlock[]>([]);
   const [newBlock, setNewBlock] = useState({
     day: "",
     startTime: "",
@@ -114,6 +70,8 @@ export default function Availability() {
     type: "study" as AvailabilityType,
     label: "",
   });
+
+  // console.log(timeBlocks); // send to server
 
   const handleDayToggle = (day: string) => {
     setSelectedDays((prev) =>
@@ -156,7 +114,7 @@ export default function Availability() {
       </div>
 
       {/* Days Selection */}
-      <Card>
+      <Card className=" border border-[#4F46E5] shadow-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Clock className="h-5 w-5" />
@@ -185,7 +143,7 @@ export default function Availability() {
       </Card>
 
       {/* Add New Time Block */}
-      <Card>
+      <Card className=" border border-[#4F46E5] shadow-lg">
         <CardHeader>
           <CardTitle>Add Time Block</CardTitle>
           <CardDescription>
@@ -193,7 +151,7 @@ export default function Availability() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             <div className=" space-y-3">
               <Label htmlFor="day">Day</Label>
               <Select
@@ -202,12 +160,16 @@ export default function Availability() {
                   setNewBlock((prev) => ({ ...prev, day: value }))
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger className=" border border-[#4F46E5] shadow-lg cursor-pointer">
                   <SelectValue placeholder="Select day" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className=" text-white bg-[#4F46E5] shadow-lg">
                   {selectedDays.map((day) => (
-                    <SelectItem key={day} value={day}>
+                    <SelectItem
+                      key={day}
+                      value={day}
+                      className=" hover:bg-white hover:text-[#4F46E5] cursor-pointer"
+                    >
                       {day}
                     </SelectItem>
                   ))}
@@ -223,12 +185,16 @@ export default function Availability() {
                   setNewBlock((prev) => ({ ...prev, startTime: value }))
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger className=" border border-[#4F46E5] shadow-lg cursor-pointer">
                   <SelectValue placeholder="Start" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className=" text-white bg-[#4F46E5] shadow-lg">
                   {TIME_OPTIONS.map((time) => (
-                    <SelectItem key={time} value={time}>
+                    <SelectItem
+                      key={time}
+                      value={time}
+                      className=" hover:bg-white hover:text-[#4F46E5] cursor-pointer"
+                    >
                       {time}
                     </SelectItem>
                   ))}
@@ -244,12 +210,16 @@ export default function Availability() {
                   setNewBlock((prev) => ({ ...prev, endTime: value }))
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger className=" border border-[#4F46E5] shadow-lg cursor-pointer">
                   <SelectValue placeholder="End" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className=" text-white bg-[#4F46E5] shadow-lg">
                   {TIME_OPTIONS.map((time) => (
-                    <SelectItem key={time} value={time}>
+                    <SelectItem
+                      key={time}
+                      value={time}
+                      className=" hover:bg-white hover:text-[#4F46E5]  cursor-pointer"
+                    >
                       {time}
                     </SelectItem>
                   ))}
@@ -265,12 +235,16 @@ export default function Availability() {
                   setNewBlock((prev) => ({ ...prev, type: value }))
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger className=" border border-[#4F46E5] shadow-lg cursor-pointer">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className=" text-white bg-[#4F46E5] shadow-lg">
                   {Object.entries(AVAILABILITY_TYPES).map(([key, config]) => (
-                    <SelectItem key={key} value={key}>
+                    <SelectItem
+                      key={key}
+                      value={key}
+                      className=" hover:bg-white hover:text-[#4F46E5] cursor-pointer"
+                    >
                       <div className="flex items-center gap-2">
                         <config.icon className="h-4 w-4" />
                         {config.label}
@@ -281,9 +255,10 @@ export default function Availability() {
               </Select>
             </div>
 
-            <div className=" space-y-3">
+            <div className=" space-y-3 ms-2">
               <Label htmlFor="label">Label (Optional)</Label>
               <Input
+                className="focus:outline-none focus:ring-0 focus:ring-[#4F46E5] focus:border-[#4F46E5] focus:border-0 border border-[#4F46E5]"
                 placeholder="e.g. Morning Study"
                 value={newBlock.label}
                 onChange={(e) =>
@@ -293,7 +268,10 @@ export default function Availability() {
             </div>
           </div>
 
-          <Button onClick={addTimeBlock} className="w-full md:w-auto">
+          <Button
+            onClick={addTimeBlock}
+            className="w-full md:w-auto bg-[#4F46E5] text-white cursor-pointer"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Time Block
           </Button>
@@ -301,7 +279,7 @@ export default function Availability() {
       </Card>
 
       {/* Weekly Schedule */}
-      <Card>
+      <Card className=" border border-[#4F46E5] shadow-lg">
         <CardHeader>
           <CardTitle>Weekly Schedule</CardTitle>
           <CardDescription>
@@ -310,50 +288,56 @@ export default function Availability() {
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            {selectedDays.map((day) => (
-              <div key={day} className="space-y-3">
-                <h3 className="font-semibold text-lg">{day}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {getBlocksForDay(day).length > 0 ? (
-                    getBlocksForDay(day).map((block) => {
-                      const config = AVAILABILITY_TYPES[block.type];
-                      const Icon = config.icon;
-                      return (
-                        <Badge
-                          key={block.id}
-                          variant="outline"
-                          className={`${config.color} px-3 py-2 text-sm flex items-center gap-2`}
-                        >
-                          <Icon className="h-4 w-4" />
-                          <span>
-                            {block.startTime} - {block.endTime}
-                            {block.label && ` (${block.label})`}
-                          </span>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-4 w-4 p-0 ml-2 hover:bg-transparent"
-                            onClick={() => removeTimeBlock(block.id)}
+            {selectedDays.length > 0 ? (
+              selectedDays.map((day) => (
+                <div key={day} className="space-y-3">
+                  <h3 className="font-semibold text-lg">{day}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {getBlocksForDay(day).length > 0 ? (
+                      getBlocksForDay(day).map((block) => {
+                        const config = AVAILABILITY_TYPES[block.type];
+                        const Icon = config.icon;
+                        return (
+                          <Badge
+                            key={block.id}
+                            variant="outline"
+                            className={`${config.color} px-3 py-2 text-sm flex items-center gap-2`}
                           >
-                            <X className="h-3 w-3" />
-                          </Button>
-                        </Badge>
-                      );
-                    })
-                  ) : (
-                    <span className="text-muted-foreground text-sm">
-                      No time blocks scheduled
-                    </span>
-                  )}
+                            <Icon className="h-4 w-4" />
+                            <span>
+                              {block.startTime} - {block.endTime}
+                              {block.label && ` (${block.label})`}
+                            </span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-4 w-4 p-0 ml-2 hover:bg-transparent"
+                              onClick={() => removeTimeBlock(block.id)}
+                            >
+                              <X className="h-3 w-3" />
+                            </Button>
+                          </Badge>
+                        );
+                      })
+                    ) : (
+                      <span className="text-muted-foreground text-sm">
+                        No time blocks scheduled
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <span className="text-muted-foreground text-sm">
+                No days selected
+              </span>
+            )}
           </div>
         </CardContent>
       </Card>
 
       {/* Legend */}
-      <Card>
+      <Card className=" border border-[#4F46E5] shadow-lg">
         <CardHeader>
           <CardTitle>Color Legend</CardTitle>
         </CardHeader>

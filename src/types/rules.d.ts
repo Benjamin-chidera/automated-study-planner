@@ -21,3 +21,12 @@ export interface FormStates {
     password?: string[] | string;
   };
 }
+
+// Define the DeleteState interface
+export interface DeleteState {
+  message: string;
+  errors?: {
+    uploadId?: string;
+    userId?: string | null;
+  };
+}

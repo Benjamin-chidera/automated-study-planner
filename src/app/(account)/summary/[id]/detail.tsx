@@ -25,6 +25,7 @@ const Details = ({ detailMaterials, user }: DetailsProps) => {
   // check if study plan is already generated
   const [isPlanGenerated, setIsPlanGenerated] = useState(false);
   const [isCheckingPlan, setIsCheckingPlan] = useState(true); // <-- added
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -47,6 +48,7 @@ const Details = ({ detailMaterials, user }: DetailsProps) => {
   // function to handle generate study plan
   const handleGeneratePlan = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.post("/api/generate-study-plan", {
         uploadId: detailMaterials._id,
         userId: user,
@@ -59,6 +61,8 @@ const Details = ({ detailMaterials, user }: DetailsProps) => {
       }
     } catch (error) {
       console.error("Error generating plan:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -81,29 +85,35 @@ const Details = ({ detailMaterials, user }: DetailsProps) => {
           </p>
         </div>
 
-        <div className="mt-5">
-          {!isCheckingPlan && !isPlanGenerated && (
-            <Button
-              className="bg-[#4F46E5] text-white cursor-pointer"
-              onClick={handleGeneratePlan}
-            >
-              Generate Study Plan
-            </Button>
-          )}
-        </div>
+        <div className="flex justify-between items-center">
+          <div className="mt-5">
+            {!isCheckingPlan && !isPlanGenerated && (
+              <Button
+                className="bg-[#4F46E5] text-white cursor-pointer"
+                onClick={handleGeneratePlan}
+                disabled={loading}
+              >
+                {loading ? "  Generating..." : "  Generate Study Plan"}
+              </Button>
+            )}
+          </div>
 
-        <div className="mt-5 flex justify-between items-center">
-          <EditModal text={detailMaterials?.summaryText} id={detailMaterials?._id} />
-          {!isCheckingPlan && isPlanGenerated && (
-            <Button
-              className="bg-[#4F46E5] text-white cursor-pointer"
-              onClick={() =>
-                router.push(`/planner?uploadId=${detailMaterials._id}`)
-              }
-            >
-              View Study Plan
-            </Button>
-          )}
+          <div className="mt-5 flex justify-between items-center">
+            <EditModal
+              text={detailMaterials?.summaryText}
+              id={detailMaterials?._id}
+            />
+            {!isCheckingPlan && isPlanGenerated && (
+              <Button
+                className="bg-[#4F46E5] text-white cursor-pointer"
+                onClick={() =>
+                  router.push(`/planner?uploadId=${detailMaterials._id}`)
+                }
+              >
+                View Study Plan
+              </Button>
+            )}
+          </div>
         </div>
       </section>
     </main>

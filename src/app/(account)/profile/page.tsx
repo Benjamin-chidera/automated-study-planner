@@ -18,7 +18,7 @@ const ProfilePage = async () => {
 
       <Availability />
 
-      <DeleteProfile />
+      <DeleteProfile/>
     </main>
   );
 };

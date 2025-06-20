@@ -1,6 +1,9 @@
 "use server";
 
-import { getMyUploadedStudyMaterials } from "@/app/actions/study-materials";
+import {
+  // deleteUploadedMaterial,
+  getMyUploadedStudyMaterials,
+} from "@/app/actions/study-materials";
 import React from "react";
 import {
   Table,
@@ -10,12 +13,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+// import { Button } from "../ui/button";
+import { DeleteProfile } from "./delete-profile";
 
 export const UploadHistory = async () => {
   const materials = await getMyUploadedStudyMaterials();
 
   return (
-    <div>
+    <main className=" shadow-lg rounded-lg pb-10">
       {" "}
       <div>
         <Table className="">
@@ -28,22 +33,33 @@ export const UploadHistory = async () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {materials?.map((uploads) => (
-              <TableRow key={uploads._id}>
-                <TableCell className="font-medium">
-                  {uploads.filename}
-                </TableCell>
-                <TableCell className="text-center">
-                  {new Date(uploads.createdAt).toLocaleDateString()}
-                </TableCell>
-                <TableCell className="text-right">
-                  <button className="text-red-500 font-bold">Delete</button>
+            {materials?.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={3}
+                  className="text-center py-6 text-gray-500"
+                >
+                  No uploads found.
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              materials?.map((uploads) => (
+                <TableRow key={uploads._id}>
+                  <TableCell className="font-medium">
+                    {uploads.filename}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {new Date(uploads.createdAt)?.toLocaleDateString()}
+                  </TableCell>
+                  <TableCell className="text-right ms-20">
+                    <DeleteProfile uploadId={uploads._id.toString()} />
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>
-    </div>
+    </main>
   );
 };
