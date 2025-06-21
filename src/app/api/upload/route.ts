@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
     // Send extracted text to save-text endpoint for storage
     try {
-      await fetch(`http://localhost:3000/api/save-text`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/save-text`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
