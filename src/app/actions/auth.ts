@@ -11,7 +11,6 @@ import sendEmail from "@/utils/sendEmail";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 
-
 export const register = async (
   state: FormState,
   formData: FormData
@@ -34,8 +33,6 @@ export const register = async (
       };
     }
 
-    // const { fullname, email, password } = validatedFields.data;
-    // connect to database
     await connectDB();
 
     // check if email already exists
@@ -60,25 +57,12 @@ export const register = async (
 
     const savedUser = await newUser.save();
 
-    // create a session for the user
-    // console.log(savedUser._id.toString());
-
     // user is authenticated, create a session for them
     await createSession(
       savedUser._id.toString(),
       savedUser.fullname,
       savedUser.email
     );
-
-    // send a welcome email to the user
-    // welcomeEmail(fullname, email);
-
-    // await sendEmail({
-    //   to: email,
-    //   subject: "Welcome to Automated Study Planner",
-    //   text: `Welcome to Automated Study Planner, ${fullname}!`,
-    //   html: `<h1>Welcome to Automated Study Planner, ${fullname}!</h1>`,
-    // });
 
     // Send a welcome email using the generic template
     await sendEmail({
@@ -94,15 +78,13 @@ export const register = async (
         logoUrl:
           "https://res.cloudinary.com/dwsc0velt/image/upload/v1750494594/Automated_study_planner/StudyMate_u8jve9.png", // Replace with your logo URL
         fullname,
-        date: new Date().toLocaleDateString(), // Replace with current date
+        date: new Date().getFullYear(), // Replace with current year
       },
     });
   } catch (error) {
     console.error(error);
     return { errors: { general: ["Something went wrong. Please try again."] } };
   }
-
-  // call n8n to send a welcome email
 
   return redirect("/upload");
 };

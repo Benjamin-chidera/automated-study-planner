@@ -1,11 +1,14 @@
 // src/app/actions/profile.ts
 "use server";
 
-import { FormStates } from "@/types/rules";
+import { DeleteState, FormStates } from "@/types/rules";
 import { User } from "@/models/user";
 import { connectDB } from "@/lib/connect";
 import { v2 as cloudinary } from "cloudinary";
 import bcrypt from "bcrypt";
+import { Planner } from "@/models/planner";
+import { Upload } from "@/models/upload";
+import sendEmail from "@/utils/sendEmail";
 
 interface userProps {
   fullname?: string | undefined;
@@ -102,3 +105,52 @@ export async function editProfile(
     };
   }
 }
+
+export const deleteUser = async (
+  state: DeleteState | null,
+  formData: FormData
+): Promise<DeleteState | null> => {
+  try {
+    const userId = formData.get("userId");
+
+    const user = await User.findByIdAndDelete(userId);
+    const planner = await Planner.deleteMany({ userId: userId });
+    const uploads = await Upload.deleteMany({ userId: userId });
+
+    if (!user || !planner || !uploads) {
+      return {
+        message: "User not found",
+        errors: { userId: "No user found with this ID" },
+      };
+    }
+
+    // Send an email to the user confirming their account deletion
+    await sendEmail({
+      to: user.email,
+      subject: "You've deleted your account",
+      template: "genericEmail.hbs",
+      context: {
+        subject: "You've deleted your account!",
+        header: `Hey, ${user.fullname}!`,
+        body: "We're sorry to see you go. We hope you come back soon.",
+        ctaText: "Join us again",
+        ctaLink: "https://automated-study-planner.vercel.app/register",
+        logoUrl:
+          "https://res.cloudinary.com/dwsc0velt/image/upload/v1750494594/Automated_study_planner/StudyMate_u8jve9.png", // Replace with your logo URL
+        // fullname: user.fullname,
+        date: new Date().getFullYear(), // Replace with current year
+      },
+    });
+
+    // redirect("/login");
+    return {
+      message: "Success",
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      message: "Failed to delete upload",
+      errors: { userId: "An error occurred while deleting" },
+    };
+  }
+};

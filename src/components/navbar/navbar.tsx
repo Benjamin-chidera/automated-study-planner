@@ -66,7 +66,7 @@ export const Navbar = async () => {
                 <NavLink href="/upload" label="Upload" />
               </li>
             )}
-              <li>
+            <li>
               <NavLink href="/contact" label="Contact" />
             </li>
           </ul>

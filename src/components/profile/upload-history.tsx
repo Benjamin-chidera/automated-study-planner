@@ -14,7 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 // import { Button } from "../ui/button";
-import { DeleteProfile } from "./delete-profile";
+import { DeleteHistory } from "./delete-history";
 
 export const UploadHistory = async () => {
   const materials = await getMyUploadedStudyMaterials();
@@ -52,7 +52,7 @@ export const UploadHistory = async () => {
                     {new Date(uploads.createdAt)?.toLocaleDateString()}
                   </TableCell>
                   <TableCell className="text-right ms-20">
-                    <DeleteProfile uploadId={uploads._id.toString()} />
+                    <DeleteHistory uploadId={uploads._id.toString()} />
                   </TableCell>
                 </TableRow>
               ))

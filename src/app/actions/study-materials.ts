@@ -2,13 +2,10 @@
 
 import { connectDB } from "@/lib/connect";
 import { getAuthUser } from "@/lib/getUser";
-import { deleteSession } from "@/lib/session";
 import { Planner } from "@/models/planner";
 import { Upload } from "@/models/upload";
-import { User } from "@/models/user";
 import { DeleteState } from "@/types/rules";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export const getMyUploadedStudyMaterials = async () => {
   const user = await getAuthUser();
@@ -73,32 +70,3 @@ export const deleteUploadedMaterial = async (
   }
 };
 
-export const deleteUser = async (
-  state: DeleteState | null,
-  formData: FormData
-): Promise<DeleteState | null> => {
-  try {
-    const userId = formData.get("userId");
-
-    const user = await User.findByIdAndDelete(userId);
-    const planner = await Planner.deleteMany({ userId: userId });
-    const uploads = await Upload.deleteMany({ userId: userId });
-
-    if (!user || !planner || !uploads) {
-      return {
-        message: "User not found",
-        errors: { userId: "No user found with this ID" },
-      };
-    }
-
-    await deleteSession(); // ✅ This logs out the user
-
-    redirect("/login");
-  } catch (error) {
-    console.error(error);
-    return {
-      message: "Failed to delete upload",
-      errors: { userId: "An error occurred while deleting" },
-    };
-  }
-};

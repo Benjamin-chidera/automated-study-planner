@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { deleteUploadedMaterial } from "@/app/actions/study-materials";
 import { toast } from "sonner";
 
-export const DeleteProfile = ({ uploadId }: { uploadId: string }) => {
+export const DeleteHistory = ({ uploadId }: { uploadId: string }) => {
   const [state, action, isPending] = useActionState(
     deleteUploadedMaterial,
     null // initial state is `null`

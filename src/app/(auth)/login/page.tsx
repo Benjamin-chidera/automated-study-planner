@@ -13,8 +13,6 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [state, action, pending] = useActionState(login, undefined);
 
-  console.log(state);
-
   const handleShow = () => {
     setShowPassword(!showPassword);
   };

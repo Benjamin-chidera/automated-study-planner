@@ -15,3 +15,4 @@ const DeleteProfile = async () => {
 };
 
 export default DeleteProfile;
+ 

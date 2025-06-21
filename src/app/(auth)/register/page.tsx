@@ -13,8 +13,6 @@ const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [state, action, pending] = useActionState(register, undefined);
 
-  console.log(state);
-
   const handleShow = () => {
     setShowPassword(!showPassword);
   };
