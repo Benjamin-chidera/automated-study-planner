@@ -22,9 +22,12 @@ interface ProfileProps {
 export const ProfileDeleted = ({ user }: ProfileProps) => {
   const [state, action, isPending] = useActionState(deleteUser, null);
 
+  // console.log(state);
+  
+
   useEffect(() => {
     if (state?.message === "Success") {
-      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/logout`, { method: "POST" }).then(() => {
+      fetch(`/api/logout`, { method: "POST" }).then(() => {
         window.location.href = "/login";
       });
     }
