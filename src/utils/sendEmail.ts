@@ -74,7 +74,6 @@ const sendEmail = async ({
 
     let html = "";
     if (template) {
-      // Use root emailTemplates directory
       const templatePath = path.join(process.cwd(), "emailTemplates", template);
       console.log("Template path:", templatePath); // Debug log
       const templateSource = await fs.readFile(templatePath, "utf-8");
