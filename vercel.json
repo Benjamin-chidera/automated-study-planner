@@ -1,8 +1,13 @@
 {
-    "$schema": "https://openapi.vercel.sh/vercel.json",
-    "functions": {
-      "app/api/**/route.ts": {
-        "includeFiles": "emailTemplates/**/*"
-      }
+  "functions": {
+    "app/api/**/*.js": {
+      "includeFiles": "public/emailTemplates/**"
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
+}

@@ -33,7 +33,7 @@ export const ProfileDeleted = ({ user }: ProfileProps) => {
   const handleSubmit = async (formData: FormData) => {
     try {
       // Show loading toast
-      toast.loading("Deleting your account...", { id: "delete-account" })
+      // toast.loading("Deleting your account...", { id: "delete-account" })
 
       // Call the server action
       await action(formData)
