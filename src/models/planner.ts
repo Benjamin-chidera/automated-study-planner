@@ -6,6 +6,7 @@ interface Planner {
   studyPlan: {
     topic: string;
     dueDate?: Date;
+    notified: boolean;
   }[];
 
   status: string; // active, inactive, completed
@@ -20,6 +21,7 @@ const plannerSchema = new Schema<Planner>(
       {
         topic: { type: String, required: true },
         dueDate: { type: Date },
+        notified: { type: Boolean, default: false },
       },
     ],
     status: {

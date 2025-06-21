@@ -62,11 +62,11 @@ export const Calendar = ({ events, uploadId, initialDate }: CalendarProps) => {
       }
 
       try {
-        const response = await axios.patch(
+       await axios.patch(
           `/api/study-plan-events?uploadId=${uploadId}`,
           updatedEvent
         );
-        console.log("Event updated:", response.data);
+        // console.log("Event updated:", response.data);
         setError(null);
         router.refresh();
         // window.location.reload();
