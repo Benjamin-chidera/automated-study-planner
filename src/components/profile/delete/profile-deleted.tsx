@@ -23,13 +23,30 @@ export const ProfileDeleted = ({ user }: ProfileProps) => {
   const [state, action, isPending] = useActionState(deleteUser, null);
 
   // console.log(state);
-  
+
+  // useEffect(() => {
+  //   if (state?.message === "Success") {
+  //     fetch(`/api/logout`, { method: "POST" }).then(() => {
+  //       window.location.href = "/login";
+  //     });
+  //   }
+  // }, [state]);
 
   useEffect(() => {
     if (state?.message === "Success") {
-      fetch(`/api/logout`, { method: "POST" }).then(() => {
-        window.location.href = "/login";
-      });
+      fetch("/api/logout", { method: "POST" })
+        .then((response) => {
+          if (!response.ok) {
+            console.error(
+              `Logout failed: ${response.status} ${response.statusText}`
+            );
+          }
+          window.location.href = "/login";
+        })
+        .catch((error) => {
+          console.error("Failed to log out:", error);
+          window.location.href = "/login"; // Redirect anyway
+        });
     }
   }, [state]);
 
