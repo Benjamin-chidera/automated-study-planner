@@ -24,7 +24,7 @@ export const ProfileDeleted = ({ user }: ProfileProps) => {
 
   useEffect(() => {
     if (state?.message === "Success") {
-      fetch("/api/logout", { method: "POST" }).then(() => {
+      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/logout`, { method: "POST" }).then(() => {
         window.location.href = "/login";
       });
     }

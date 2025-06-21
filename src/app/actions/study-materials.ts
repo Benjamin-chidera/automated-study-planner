@@ -50,9 +50,9 @@ export const deleteUploadedMaterial = async (
   try {
     await connectDB();
     const upload = await Upload.findByIdAndDelete(uploadId);
-    const planner = await Planner.findOneAndDelete({ uploadId: uploadId });
+    await Planner.findOneAndDelete({ uploadId: uploadId });
 
-    if (!upload || !planner) {
+    if (!upload) {
       return {
         message: "Upload not found",
         errors: { uploadId: "No upload found with this ID" },
