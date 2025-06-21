@@ -6,9 +6,11 @@ import { createSession, deleteSession } from "@/lib/session";
 import { User } from "@/models/user";
 import { LoginErrors, RegisterErrors } from "@/types/register";
 import { FormState } from "@/types/rules";
+import sendEmail from "@/utils/sendEmail";
 
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
+
 
 export const register = async (
   state: FormState,
@@ -62,10 +64,39 @@ export const register = async (
     // console.log(savedUser._id.toString());
 
     // user is authenticated, create a session for them
-    await createSession(savedUser._id.toString(), savedUser.fullname, savedUser.email);
+    await createSession(
+      savedUser._id.toString(),
+      savedUser.fullname,
+      savedUser.email
+    );
 
     // send a welcome email to the user
     // welcomeEmail(fullname, email);
+
+    // await sendEmail({
+    //   to: email,
+    //   subject: "Welcome to Automated Study Planner",
+    //   text: `Welcome to Automated Study Planner, ${fullname}!`,
+    //   html: `<h1>Welcome to Automated Study Planner, ${fullname}!</h1>`,
+    // });
+
+    // Send a welcome email using the generic template
+    await sendEmail({
+      to: email,
+      subject: "Welcome to Automated Study Planner!",
+      template: "genericEmail.hbs",
+      context: {
+        subject: "Welcome to Automated Study Planner!",
+        header: `Welcome, ${fullname}!`,
+        body: "Thank you for joining Automated Study Planner! We're excited to have you on board. Get started by uploading your study materials.",
+        ctaText: "Get Started",
+        ctaLink: "https://automated-study-planner.vercel.app/upload",
+        logoUrl:
+          "https://res.cloudinary.com/dwsc0velt/image/upload/v1750494594/Automated_study_planner/StudyMate_u8jve9.png", // Replace with your logo URL
+        fullname,
+        date: new Date().toLocaleDateString(), // Replace with current date
+      },
+    });
   } catch (error) {
     console.error(error);
     return { errors: { general: ["Something went wrong. Please try again."] } };
