@@ -1,7 +1,20 @@
 {
-    "functions": {
-      "api/**/*.js": {
-        "includeFiles": "emailTemplates/**/*" 
-      }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "pages/api/**/*.js": {
+      "includeFiles": "emailTemplates/**/*"
+    },
+    "src/pages/api/**/*.js": {
+      "includeFiles": "emailTemplates/**/*"
+    },
+    "app/api/**/route.js": {
+      "includeFiles": "emailTemplates/**/*"
+    },
+    "api/**/*.ts": {
+      "includeFiles": "emailTemplates/**/*"
+    },
+    "api/**/*.js": {
+      "includeFiles": "emailTemplates/**/*"
     }
   }
+}
