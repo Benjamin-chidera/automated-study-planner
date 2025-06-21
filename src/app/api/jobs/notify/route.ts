@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   await notifyDuePlans();
-  return NextResponse.json({ status: "Notification check complete" });
+  return NextResponse.json(
+    { message: "Notification check complete" },
+    { status: 200 }
+  );
 }
- 
