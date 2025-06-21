@@ -9,8 +9,6 @@ import bcrypt from "bcrypt";
 import { Planner } from "@/models/planner";
 import { Upload } from "@/models/upload";
 import sendEmail from "@/utils/sendEmail";
-import { redirect } from "next/navigation";
-import { deleteSession } from "@/lib/session";
 
 interface userProps {
   fullname?: string | undefined;
@@ -152,98 +150,62 @@ export const deleteUser = async (
   formData: FormData
 ): Promise<DeleteState | null> => {
   try {
-    const userId = formData.get("userId")?.toString();
+    const userId = formData.get("userId");
 
-    if (!userId) {
-      return {
-        message: "Failed to delete user",
-        errors: { userId: "User ID is required" },
-      };
-    }
+    const user = await User.findByIdAndDelete(userId);
+    const planner = await Planner.deleteMany({ userId: userId });
+    const uploads = await Upload.deleteMany({ userId: userId });
 
-    await connectDB();
-
-    // Find user first to get email and image info before deletion
-    const user = await User.findById(userId);
-    if (!user) {
+    if (!user || !planner || !uploads) {
       return {
         message: "User not found",
         errors: { userId: "No user found with this ID" },
       };
     }
 
-    // Store user info for email before deletion
-    const userEmail = user.email;
-    const userFullname = user.fullname;
-    const userImage = user.image;
-
-    // Delete user and related data
-    const [deletedUser, deletedPlanners, deletedUploads] = await Promise.all([
-      User.findByIdAndDelete(userId),
-      Planner.deleteMany({ userId: userId }),
-      Upload.deleteMany({ userId: userId }),
-    ]);
-
-    if (!deletedUser) {
-      return {
-        message: "Failed to delete user",
-        errors: { userId: "User deletion failed" },
-      };
-    }
-
-    // Delete image from Cloudinary if it exists (non-blocking)
-    if (userImage) {
-      const publicId = extractPublicId(userImage);
+    // Delete image from Cloudinary if it exists
+    // Delete image from Cloudinary if it exists
+    if (user.image) {
+      const publicId = extractPublicId(user.image);
       if (publicId) {
-        cloudinary.uploader
-          .destroy(publicId)
-          .then((result) => {
-            console.log("Cloudinary deletion result:", result);
-          })
-          .catch((err) => {
-            console.log("Cloudinary Image Deletion", err);
-          });
+        try {
+          const result = await cloudinary.uploader.destroy(publicId);
+          console.log("Cloudinary deletion result:", result);
+        } catch (err) {
+          console.error("Failed to delete image from Cloudinary:", err);
+        }
       } else {
-        console.warn("Could not extract public ID for image:", userImage);
+        console.error("Could not extract public ID for image:", user.image);
       }
     }
 
-    // Send deletion confirmation email (non-blocking)
-    sendEmail({
-      to: userEmail,
-      subject: "Account Deletion Confirmation",
+    // Send an email to the user confirming their account deletion
+    await sendEmail({
+      to: user.email,
+      subject: "You've deleted your account",
       template: "genericEmail.hbs",
       context: {
-        subject: "Account Deletion Confirmation",
-        header: `Goodbye, ${userFullname}!`,
-        body: "Your account has been successfully deleted. We're sorry to see you go and hope you'll consider joining us again in the future.",
+        subject: "You've deleted your account!",
+        header: `Hey, ${user.fullname}!`,
+        body: "We're sorry to see you go. We hope you come back soon.",
         ctaText: "Join us again",
         ctaLink: "https://automated-study-planner.vercel.app/register",
         logoUrl:
-          "https://res.cloudinary.com/dwsc0velt/image/upload/v1750507488/Automated_study_planner/StudyMate-Photoroom_hyhgtl.png",
-        fullname: userFullname,
-        date: new Date().getFullYear(),
+          "https://res.cloudinary.com/dwsc0velt/image/upload/v1750507488/Automated_study_planner/StudyMate-Photoroom_hyhgtl.png", // Replace with your logo URL
+        // fullname: user.fullname,
+        date: new Date().getFullYear(), // Replace with current year
       },
-    }).catch((error) => {
-      console.log("Account Deletion Email", error);
-      // Don't throw error, just log it
     });
 
-    // Delete the session
-    await deleteSession();
-
-    console.log(
-      `User ${userId} successfully deleted with ${deletedPlanners.deletedCount} planners and ${deletedUploads.deletedCount} uploads`
-    );
-  } catch (error) {
-    console.log("Delete User", error);
-
+    // redirect("/login");
     return {
-      message: "Failed to delete user",
-      errors: { userId: "An error occurred while deleting the account" },
+      message: "Success",
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      message: "Failed to delete upload",
+      errors: { userId: "An error occurred while deleting" },
     };
   }
-
-  // Redirect after successful deletion
-  redirect("/login");
 };
