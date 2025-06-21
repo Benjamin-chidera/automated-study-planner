@@ -51,9 +51,9 @@ import Handlebars from "handlebars";
 interface EmailOptions {
   to: string;
   subject: string;
-  template?: string; // Path to Handlebars template file (e.g., 'genericEmail.hbs')
-  context?: Record<string, unknown>; // Variables for template
-  text?: string; // Fallback plain text
+  template?: string;
+  context?: Record<string, unknown>;
+  text?: string;
 }
 
 const sendEmail = async ({
@@ -64,7 +64,6 @@ const sendEmail = async ({
   text,
 }: EmailOptions): Promise<void> => {
   try {
-    // Create a transporter using Gmail SMTP
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -73,17 +72,16 @@ const sendEmail = async ({
       },
     });
 
-    // Prepare HTML content
     let html = "";
     if (template) {
-      // Read and compile Handlebars template
-      const templatePath = path.join(process.cwd(), 'src/emailTemplates', template);
+      // Use root emailTemplates directory
+      const templatePath = path.join(process.cwd(), "emailTemplates", template);
+      console.log("Template path:", templatePath); // Debug log
       const templateSource = await fs.readFile(templatePath, "utf-8");
       const compiledTemplate = Handlebars.compile(templateSource);
       html = compiledTemplate(context || {});
     }
 
-    // Define email options
     const mailOptions = {
       from: `"STUDYMATE" <${process.env.GMAIL_USER}>`,
       to,
@@ -92,7 +90,6 @@ const sendEmail = async ({
       html,
     };
 
-    // Send the email
     await transporter.sendMail(mailOptions);
     console.log(`Email sent successfully to ${to}`);
   } catch (error) {

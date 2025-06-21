@@ -1,0 +1,13 @@
+{
+    "builds": [
+      {
+        "src": "next.config.mjs",
+        "use": "@vercel/next"
+      }
+    ],
+    "functions": {
+      "api/**/*": {
+        "includeFiles": ["src/emailTemplates/**"]
+      }
+    }
+  }
