@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { deleteUser } from "@/app/actions/profile"
-import type { SessionPayload } from "@/types/session"
-import { useActionState, useState } from "react"
+import { deleteUser } from "@/app/actions/profile";
+import type { SessionPayload } from "@/types/session";
+import { useActionState, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,52 +11,54 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { DialogClose } from "@radix-ui/react-dialog"
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
-import { AlertTriangle, Trash2 } from "lucide-react"
+} from "@/components/ui/dialog";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { AlertTriangle, Trash2 } from "lucide-react";
 
 interface ProfileProps {
-  user: SessionPayload | undefined
+  user: SessionPayload | undefined;
 }
 
 export const ProfileDeleted = ({ user }: ProfileProps) => {
-  const [state, action, isPending] = useActionState(deleteUser, null)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [state, action, isPending] = useActionState(deleteUser, null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Handle errors from server action
   if (state?.errors) {
-    toast.error(state.message || "Failed to delete account")
+    toast.error(state.message || "Failed to delete account");
   }
 
   const handleSubmit = async (formData: FormData) => {
     try {
-      // Show loading toast
-      // toast.loading("Deleting your account...", { id: "delete-account" })
-
       // Call the server action
-      await action(formData)
+      await action(formData);
 
       // Close dialog
-      setIsDialogOpen(false)
+      setIsDialogOpen(false);
 
       // Dismiss loading toast
-      toast.dismiss("delete-account")
+      toast.dismiss("delete-account");
     } catch (error) {
-      console.error("Delete account error:", error)
-      toast.dismiss("delete-account")
-      toast.error("Failed to delete account. Please try again.")
+      console.error("Delete account error:", error);
+      toast.dismiss("delete-account");
+      toast.error("Failed to delete account. Please try again.");
     }
-  }
+  };
 
   return (
     <div className="border border-red-200 rounded-lg p-6 bg-red-50">
       <div className="flex items-start gap-4">
         <AlertTriangle className="text-red-600 mt-1" size={24} />
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-red-800 mb-2">Delete Account</h3>
-          <p className="text-red-700 mb-4">Once you delete your account, there is no going back. Please be certain.</p>
+          <h3 className="text-lg font-semibold text-red-800 mb-2">
+            Delete Account
+          </h3>
+          <p className="text-red-700 mb-4">
+            Once you delete your account, there is no going back. Please be
+            certain.
+          </p>
 
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
@@ -77,8 +79,9 @@ export const ProfileDeleted = ({ user }: ProfileProps) => {
                   Delete Account
                 </DialogTitle>
                 <DialogDescription className="text-gray-600 mt-2">
-                  This action cannot be undone. This will permanently delete your account, all your study planners,
-                  uploads, and remove all your data from our servers.
+                  This action cannot be undone. This will permanently delete
+                  your account, all your study planners, uploads, and remove all
+                  your data from our servers.
                 </DialogDescription>
               </DialogHeader>
 
@@ -93,7 +96,12 @@ export const ProfileDeleted = ({ user }: ProfileProps) => {
 
                 <DialogFooter className="flex gap-3 mt-6">
                   <DialogClose asChild>
-                    <Button type="button" variant="outline" className="flex-1" disabled={isPending}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="flex-1"
+                      disabled={isPending}
+                    >
                       Cancel
                     </Button>
                   </DialogClose>
@@ -124,5 +132,5 @@ export const ProfileDeleted = ({ user }: ProfileProps) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
