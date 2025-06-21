@@ -1,7 +1,7 @@
 {
   "functions": {
     "app/api/**/*.js": {
-      "includeFiles": "public/emailTemplates/**"
+      "includeFiles": "/emailTemplates/**"
     }
   },
   "rewrites": [
