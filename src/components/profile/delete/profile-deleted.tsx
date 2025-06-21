@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface ProfileProps {
   user: SessionPayload | undefined;
@@ -41,10 +42,12 @@ export const ProfileDeleted = ({ user }: ProfileProps) => {
               `Logout failed: ${response.status} ${response.statusText}`
             );
           }
+          toast.success(state.message);
           window.location.href = "/login";
         })
         .catch((error) => {
           console.error("Failed to log out:", error);
+          toast.error("Failed to log out");
           window.location.href = "/login"; // Redirect anyway
         });
     }
