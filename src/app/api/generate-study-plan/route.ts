@@ -3,6 +3,8 @@ import { connectDB } from "@/lib/connect";
 import { generatePlan } from "@/lib/generate-plan";
 import { Planner } from "@/models/planner";
 import { Upload } from "@/models/upload";
+import { User } from "@/models/user";
+import sendEmail from "@/utils/sendEmail";
 import { NextResponse, NextRequest } from "next/server";
 
 function extractJSON(text: string) {
@@ -30,6 +32,7 @@ export async function POST(req: NextRequest) {
     }
 
     await connectDB();
+    const user = await User.findById(userId);
     const getSummary = await Upload.findById(uploadId);
     if (!getSummary) {
       return NextResponse.json({ error: "Upload not found" }, { status: 404 });
@@ -53,6 +56,23 @@ export async function POST(req: NextRequest) {
     plan.hasGeneratedAStudyPlan = true;
 
     await plan.save();
+
+    // send email to user
+    await sendEmail({
+      to: user.email,
+      subject: "Your study plan is ready!",
+      template: "genericEmail.hbs",
+      context: {
+        subject: "Your study plan is ready!",
+        header: `Hey, ${user.fullname}!`,
+        body: " Your study plan is ready. Check your email for more details.",
+        ctaText: "View study plan",
+        ctaLink: `https://automated-study-planner.vercel.app/planner?uploadId=${uploadId}`,
+        logoUrl:
+          "https://res.cloudinary.com/dwsc0velt/image/upload/v1750507488/Automated_study_planner/StudyMate-Photoroom_hyhgtl.png", // Replace with your logo URL
+        date: new Date().getFullYear(), // Replace with current year
+      },
+    });
 
     return NextResponse.json(
       { success: true, studyPlan: parsedPlan },

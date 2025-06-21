@@ -61,7 +61,8 @@ export const register = async (
     await createSession(
       savedUser._id.toString(),
       savedUser.fullname,
-      savedUser.email
+      savedUser.email,
+      savedUser.image
     );
 
     // Send a welcome email using the generic template
@@ -76,7 +77,7 @@ export const register = async (
         ctaText: "Get Started",
         ctaLink: "https://automated-study-planner.vercel.app/upload",
         logoUrl:
-          "https://res.cloudinary.com/dwsc0velt/image/upload/v1750494594/Automated_study_planner/StudyMate_u8jve9.png", // Replace with your logo URL
+          "https://res.cloudinary.com/dwsc0velt/image/upload/v1750507488/Automated_study_planner/StudyMate-Photoroom_hyhgtl.png", // Replace with your logo URL
         fullname,
         date: new Date().getFullYear(), // Replace with current year
       },
@@ -133,7 +134,12 @@ export const login = async (
     }
 
     // user is authenticated, create a session for them
-    await createSession(user._id.toString(), user.fullname, user.email);
+    await createSession(
+      user._id.toString(),
+      user.fullname,
+      user.email,
+      user.image
+    );
   } catch (error) {
     console.error(error);
     return { errors: { general: ["Something went wrong. Please try again."] } };

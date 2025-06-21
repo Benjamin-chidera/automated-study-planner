@@ -23,11 +23,9 @@ interface CalendarProps {
   initialDate: Date | null;
 }
 
-
-
 export const Calendar = ({ events, uploadId, initialDate }: CalendarProps) => {
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter()
+  const router = useRouter();
 
   // Transform events to FullCalendar format
   const formattedEvents = useMemo(() => {
@@ -81,11 +79,11 @@ export const Calendar = ({ events, uploadId, initialDate }: CalendarProps) => {
   };
 
   return (
-    <main className="p-4 md:flex gap-8">
+    <main className="p-4 md:flex gap-8 h-[600px]">
       {error && <p className="text-red-500 mb-2">{error}</p>}
 
-      <div className="w-1/4 p-4 border hidden md:block">
-        <h2 className="font-bold mb-4">Draggable Events</h2>
+      <div className="w-1/4 p-4 border hidden md:block  overflow-y-scroll">
+        <h2 className="font-bold mb-4">Topics</h2>
         {formattedEvents.map((event, index) => (
           <div
             key={index}

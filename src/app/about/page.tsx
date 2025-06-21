@@ -12,32 +12,31 @@ const page = () => {
         </p>
 
         <p className=" mt-2 text-lg">
-          The Automated Study Planner is a web app designed to assist university
-          students in transforming images or screenshots of lecture slides,
-          textbooks, or notes into structured, weekly study plans, leveraging
-          the power of AI and OCR.
+          The StudyMate is a web app designed to assist students in transforming
+          images, PDF or screenshots of lecture slides, textbooks, or notes into
+          structured, weekly study plans, leveraging the power of AI and OCR.
         </p>
       </section>
 
       <section>
         <h1 className=" font-bold text-xl md:text-3xl">Key Features</h1>
 
-        <section className=" flex items-center justify-between flex-wrap gap-4 mt-7">
-          <div className=" space-y-3">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-7">
+          <div className="w-full space-y-3">
             <Image
-              src={"/study-materials.png"}
+              src="/study-materials.png"
               alt="Study materials"
               height={500}
               width={500}
               quality={100}
-              className="w-[300px] md:w-[340px] h-[300px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
-            <h1 className=" font-medium text-lg md:text-2xl">
+            <h1 className="font-medium text-lg md:text-2xl">
               Upload Study Material
             </h1>
 
-            <p className=" text-lg text-gray-600 max-w-[300px]">
+            <p className="text-lg text-gray-600 max-w-sm mx-auto">
               Easily upload your study materials via a convenient drag-and-drop
               interface.
             </p>
@@ -50,7 +49,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
-              className="w-[300px] md:w-[340px] h-[300px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
@@ -70,7 +69,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
-              className="w-[300px] md:w-[340px] h-[300px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">Weekly Planner</h1>
@@ -88,7 +87,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
-              className="w-[300px] md:w-[340px] h-[300px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
@@ -182,7 +181,7 @@ const page = () => {
       <section>
         <h1 className=" font-bold text-xl md:text-3xl">Visual Journey</h1>
 
-        <section className=" flex items-center justify-between flex-wrap gap-4 mt-7">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-7">
           <div className=" space-y-3">
             <Image
               src={"/struggle-img.png"}
@@ -190,7 +189,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
-              className="w-[300px] md:w-[340px] h-[300px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
@@ -205,11 +204,11 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
-              className="w-[300px] md:w-[340px] h-[300px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
-              Meeting the StudyGenius
+              Meeting the StudyMate
             </h1>
           </div>
 
@@ -220,7 +219,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
-              className="w-[300px] md:w-[340px] h-[300px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
@@ -235,11 +234,11 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
-              className="w-[300px] md:w-[340px] h-[300px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-2xl"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
-              Peace of mind using it
+              Happy and in control
             </h1>
           </div>
         </section>
@@ -249,10 +248,10 @@ const page = () => {
         <h1 className=" font-bold text-xl md:text-3xl">Meet the Developer</h1>
 
         <p className=" mt-4 text-lg">
-          StudyGenius was created by <strong>Benjamin Chidera</strong>, a
-          student in the MSc Computer Science program at the University of
-          Dundee. Driven by a passion for improving the student experience,
-          <strong>Benjamin</strong> developed this app to help students manage
+          StudyMate was created by <strong>Benjamin Chidera</strong>, a student
+          in the MSc Computer Science program at the University of Dundee.
+          Driven by a passion for improving the student experience,
+          <strong> Benjamin</strong> developed this app to help students manage
           their studies more effectively.
         </p>
       </section>

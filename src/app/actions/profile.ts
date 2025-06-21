@@ -71,7 +71,7 @@ export async function editProfile(
     const updateFields: userProps = {
       ...(fullname && { fullname }),
       ...(email && { email }),
-      ...(imageUrl && { imageUrl }),
+      ...(imageUrl && { image: imageUrl }),
     };
 
     // If new password is provided, validate and hash it
@@ -106,6 +106,45 @@ export async function editProfile(
   }
 }
 
+// // Extract public ID from image URL
+// Extract public ID from Cloudinary image URL
+const extractPublicId = (url: string): string | null => {
+  try {
+    const parts = url.split("/");
+    // Find the index of 'upload' in the URL
+    const uploadIndex = parts.indexOf("upload");
+    if (uploadIndex === -1) {
+      console.error("Invalid Cloudinary URL: 'upload' not found", url);
+      return null;
+    }
+
+    // The folder and filename are after 'upload' (skip version number if present)
+    let folderStartIndex = uploadIndex + 1;
+    // Check if the next segment is a version number (e.g., v1234567890)
+    if (
+      parts[folderStartIndex].startsWith("v") &&
+      /^\d+$/.test(parts[folderStartIndex].slice(1))
+    ) {
+      folderStartIndex++; // Skip the version number
+    }
+
+    // Get the filename (last part)
+    const fileName = parts[parts.length - 1];
+    const publicId = fileName.split(".")[0]; // Remove extension
+
+    // Get the folder path (from after upload/version to before filename)
+    const folder = parts.slice(folderStartIndex, parts.length - 1).join("/");
+
+    const fullPublicId = folder ? `${folder}/${publicId}` : publicId;
+    console.log("Extracted public ID:", fullPublicId);
+
+    return fullPublicId; // e.g., Automated_study_planner/StudyMate-Photoroom_hyhgtl
+  } catch (err) {
+    console.error("Error extracting public ID:", err, "URL:", url);
+    return null;
+  }
+};
+
 export const deleteUser = async (
   state: DeleteState | null,
   formData: FormData
@@ -124,6 +163,22 @@ export const deleteUser = async (
       };
     }
 
+    // Delete image from Cloudinary if it exists
+    // Delete image from Cloudinary if it exists
+    if (user.image) {
+      const publicId = extractPublicId(user.image);
+      if (publicId) {
+        try {
+          const result = await cloudinary.uploader.destroy(publicId);
+          console.log("Cloudinary deletion result:", result);
+        } catch (err) {
+          console.error("Failed to delete image from Cloudinary:", err);
+        }
+      } else {
+        console.error("Could not extract public ID for image:", user.image);
+      }
+    }
+
     // Send an email to the user confirming their account deletion
     await sendEmail({
       to: user.email,
@@ -136,7 +191,7 @@ export const deleteUser = async (
         ctaText: "Join us again",
         ctaLink: "https://automated-study-planner.vercel.app/register",
         logoUrl:
-          "https://res.cloudinary.com/dwsc0velt/image/upload/v1750494594/Automated_study_planner/StudyMate_u8jve9.png", // Replace with your logo URL
+          "https://res.cloudinary.com/dwsc0velt/image/upload/v1750507488/Automated_study_planner/StudyMate-Photoroom_hyhgtl.png", // Replace with your logo URL
         // fullname: user.fullname,
         date: new Date().getFullYear(), // Replace with current year
       },

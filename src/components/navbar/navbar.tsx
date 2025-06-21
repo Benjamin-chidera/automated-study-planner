@@ -39,8 +39,6 @@ export const Navbar = async () => {
       .join("");
   }
 
-  // console.log(initials);
-
   return (
     <main>
       {/* top nav for mobile */}
@@ -48,7 +46,13 @@ export const Navbar = async () => {
         <section>
           <div>
             <Link href={"/"}>
-              <Image src={"/logo.jpeg"} height={150} width={150} alt="logo" />
+              <Image
+                src={"/logo.png"}
+                height={150}
+                width={150}
+                alt="logo"
+                className=" h-20 w-20"
+              />
             </Link>
           </div>
         </section>
@@ -82,7 +86,10 @@ export const Navbar = async () => {
               <DropdownMenu>
                 <DropdownMenuTrigger className=" border-none outline-none cursor-pointer">
                   <Avatar>
-                    {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
+                    {typeof user?.userImage === "string" && (
+                      <AvatarImage src={user?.userImage} />
+                    )}
+
                     <AvatarFallback className=" text-white bg-[#4F46E5] font-bold">
                       {initials}
                     </AvatarFallback>
@@ -114,11 +121,17 @@ export const Navbar = async () => {
 
       {/* mobile top nav */}
 
-      <div className="md:hidden fixed top-5 left-1/2 transform -translate-x-1/2 z-50 flex justify-between px-5 items-center h-16 mx-auto  w-full ">
+      <div className="md:hidden fixed top-5 left-0 right-0 mx-auto w-11/12 z-50 flex justify-between items-center h-16">
         <section>
           <div>
             <Link href={"/"}>
-              <Image src={"/logo.jpeg"} height={150} width={150} alt="logo" />
+              <Image
+                src={"/logo.png"}
+                height={150}
+                width={150}
+                alt="logo"
+                className=" h-14 w-14 bg-white rounded-full"
+              />
             </Link>
           </div>
         </section>
