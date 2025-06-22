@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
     await sendEmail({
       to: user.email,
       subject: "Your study plan is ready!",
-      template: "genericEmail.hbs",
+      template: "genericEmail",
       context: {
         subject: "Your study plan is ready!",
         header: `Hey, ${user.fullname}!`,
