@@ -84,7 +84,7 @@ export const register = async (
       sendEmail({
         to: email,
         subject: "Welcome to Automated Study Planner!",
-        template: "genericEmail.hbs",
+        template: "welcomeEmail",
         context: {
           subject: "Welcome to Automated Study Planner!",
           header: `Welcome, ${fullname}!`,
