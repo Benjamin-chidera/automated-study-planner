@@ -79,27 +79,66 @@ export const emailTemplates = {
     <html>
     <head>
       <meta charset="utf-8">
-      <title>Welcome to StudyMate</title>
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 8px; color: white; }
-        .logo { max-width: 200px; height: auto; }
-        .content { background: #f9f9f9; padding: 30px; border-radius: 8px; margin-bottom: 20px; }
-        .cta-button { display: inline-block; background: #28a745; color: white !important; padding: 15px 30px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+       <title>{{subject}}</title>
+           <style>
+        body { 
+          font-family: Arial, sans-serif; 
+          line-height: 1.6; 
+          color: #333; 
+          margin: 0; 
+          padding: 0; 
+        }
+        .container { 
+          max-width: 600px; 
+          margin: 0 auto; 
+          padding: 20px; 
+        }
+        .header { 
+          text-align: center; 
+          margin-bottom: 30px; 
+        }
+        .logo { 
+          max-width: 200px; 
+          height: auto; 
+        }
+        .content { 
+          background: #f9f9f9; 
+          padding: 30px; 
+          border-radius: 8px; 
+          margin-bottom: 20px;
+        }
+        .cta-button { 
+          display: inline-block; 
+          background: #007bff; 
+          color: white !important; 
+          padding: 12px 24px; 
+          text-decoration: none; 
+          border-radius: 4px; 
+          margin: 20px 0; 
+        }
+        .footer { 
+          text-align: center; 
+          margin-top: 30px; 
+          color: #666; 
+          font-size: 14px; 
+        }
       </style>
     </head>
     <body>
       <div class="container">
-        <div class="header">
-          <h1>Welcome to StudyMate!</h1>
-          <p>Your journey to better learning starts here</p>
+       <div class="header">
+          {{#if logoUrl}}
+            <img src="{{logoUrl}}" alt="StudyMate" class="logo">
+          {{else}}
+            <h1>StudyMate</h1>
+          {{/if}}
         </div>
         <div class="content">
-          <h2>Hello {{fullname}}!</h2>
+          <h2>Hello {{fullname}}, Welcome to StudyMate!</h2>
           <p>{{body}}</p>
-          <a href="{{ctaLink}}" class="cta-button">{{ctaText}}</a>
+         {{#if ctaText}}
+            <a href="{{ctaLink}}" class="cta-button">{{ctaText}}</a>
+          {{/if}}
         </div>
         <div class="footer">
           <p>&copy; {{date}} StudyMate. All rights reserved.</p>
@@ -108,4 +147,4 @@ export const emailTemplates = {
     </body>
     </html>
   `,
-}
+};
