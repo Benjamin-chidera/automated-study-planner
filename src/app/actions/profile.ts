@@ -212,7 +212,7 @@ export const deleteUser = async (
     sendEmail({
       to: userEmail,
       subject: "Account Deletion Confirmation",
-      template: "genericEmail.hbs",
+      template: "genericEmail",
       context: {
         subject: "Account Deletion Confirmation",
         header: `Goodbye, ${userFullname}!`,

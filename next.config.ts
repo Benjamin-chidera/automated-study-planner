@@ -1,5 +1,4 @@
 import type { NextConfig } from "next"
-import path from "path"
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -14,16 +13,25 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // Ensure email templates are included in the build
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        "@/emailTemplates": path.resolve(process.cwd(), "public/emailTemplates"),
-      }
-    }
-    return config
-  },
+  // ❌ Remove this entire webpack section:
+  // webpack: (config, { isServer }) => {
+  //   if (isServer) {
+  //     config.plugins = config.plugins || []
+  //     const CopyPlugin = require("copy-webpack-plugin")
+  //     config.plugins.push(
+  //       new CopyPlugin({
+  //         patterns: [
+  //           {
+  //             from: "emailTemplates",
+  //             to: "emailTemplates",
+  //             noErrorOnMissing: true,
+  //           },
+  //         ],
+  //       }),
+  //     )
+  //   }
+  //   return config
+  // },
 }
 
 export default nextConfig
