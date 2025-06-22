@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
       // Ensure email templates are included in the build
       config.resolve.alias = {
         ...config.resolve.alias,
-        "@/emailTemplates": path.resolve(process.cwd(), "/emailTemplates"),
+        "@/emailTemplates": path.resolve(process.cwd(), "public/emailTemplates"),
       }
     }
     return config
