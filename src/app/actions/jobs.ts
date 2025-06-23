@@ -61,10 +61,10 @@ export const notifyDuePlans = async () => {
   const planners = await Planner.find({
     "studyPlan.dueDate": { $lte: new Date() },
     "studyPlan.notified": false,
-  }).populate("userId");
+  })
 
   for (const planner of planners) {
-    const user = planner.userId;
+    const user = await User.findById(planner.userId);
     if (!user?.email) continue;
 
     let modified = false;
