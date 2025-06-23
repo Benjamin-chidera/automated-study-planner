@@ -72,7 +72,7 @@ export const notifyDuePlans = async () => {
         sendEmail({
           to: user.email,
           subject: `Reminder: ${item.topic}`,
-          template: "genericEmail.hbs",
+          template: "genericEmail",
           context: {
             subject: "Study Reminder",
             header: `Hey ${user.fullname}, it's time to study!`,
