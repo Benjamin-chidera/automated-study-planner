@@ -3,13 +3,7 @@
   "crons": [
     {
       "path": "/api/notify",
-      "schedule": "*/30 * * * *"
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/((?!api|_next|favicon.ico).*)",
-      "destination": "/"
+      "schedule": "0 5 * * *"
     }
   ]
 }
