@@ -9,3 +9,11 @@ export async function GET() {
     { status: 200 }
   );
 }
+
+// "$schema": "https://openapi.vercel.sh/vercel.json",
+//   "crons": [
+//     {
+//       "path": "/api/notify",
+//       "schedule": "*/30 * * * *"
+//     }
+//   ],
