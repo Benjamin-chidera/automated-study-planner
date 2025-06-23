@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // src/app/actions/jobs.ts
 import { connectDB } from "@/lib/connect";
 import { Planner } from "@/models/planner";
+import { User } from "@/models/user";
+
 import sendEmail from "@/utils/sendEmail";
 
 // interface ItemProps {
