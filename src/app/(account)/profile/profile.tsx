@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/app/profile/page.tsx
 "use client";
 
@@ -13,9 +14,10 @@ import { toast } from "sonner";
 
 interface ProfileProps {
   user: SessionPayload | undefined;
+  userProfile: any;
 }
 
-const Profile = ({ user }: ProfileProps) => {
+const Profile = ({ user, userProfile }: ProfileProps) => {
   const [image, setImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [state, action, pending] = useActionState<
@@ -82,10 +84,10 @@ const Profile = ({ user }: ProfileProps) => {
               className="relative w-32 h-32 rounded-full overflow-hidden cursor-pointer group border-2 border-indigo-500 shadow-lg"
               onClick={handleClick}
             >
-              {image ? (
+              {image || userProfile.image ? (
                 <Image
-                  src={image}
-                  alt="Profile Preview"
+                  src={image || userProfile.image}
+                  alt="Profile Image"
                   className="object-cover w-full h-full"
                   fill
                   style={{ objectFit: "cover" }}

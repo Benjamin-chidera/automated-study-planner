@@ -12,11 +12,13 @@ import sendEmail from "@/utils/sendEmail";
 import { redirect } from "next/navigation";
 import { deleteSession } from "@/lib/session";
 
+
 interface userProps {
   fullname?: string | undefined;
   email?: string | undefined;
   password?: string;
   imageUrl?: string | undefined;
+  // message?: string;
 }
 
 cloudinary.config({
@@ -247,3 +249,26 @@ export const deleteUser = async (
   // Redirect after successful deletion
   redirect("/login");
 };
+
+
+export async function getProfile(userId: string): Promise<userProps | null> {
+  try {
+    await connectDB();
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return null;
+    }
+
+    return JSON.parse(JSON.stringify(user));
+    
+  } catch (error) {
+    console.log(error);
+    // return {
+    //   message: "Failed to get profile",
+    //   errors: { userId: "An error occurred while getting the profile" }
+    // }
+    return null;
+    
+  }
+}
