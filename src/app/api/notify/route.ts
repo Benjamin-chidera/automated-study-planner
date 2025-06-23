@@ -15,16 +15,16 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const scheduleUrl =
-    "https://qstash.upstash.io/v2/schedules/https://automated-study-planner.vercel.app/api/notify";
+    `${process.env.QSTASH_URL}/v2/schedules/${process.env.QSTASH_SCHEDULE_ID}`;
 
   try {
     const response = await fetch(scheduleUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Upstash-Cron": "* * * * *", // runs every minute
+        "Upstash-Cron": "0 * * * *", // Run every hour
         Authorization:
-          "Bearer eyJVc2VySUQiOiIwMTNlMTlkOS1hOTJhLTRjODgtYTI5Yi04NWFiYTFmMzIwY2EiLCJQYXNzd29yZCI6ImZkMmZiN2FjODE0NTQxODhiZmZkNGJmMjYwOWJhYTQ0In0=",
+          `Bearer ${process.env.QSTASH_TOKEN}`,
       },
       body: JSON.stringify({
         description: "StudyMate - Automated Study Planner Notification Job",
@@ -41,7 +41,7 @@ export async function GET() {
     }
 
     await notifyDuePlans();
-    
+
     const data = await response.json();
     return NextResponse.json(
       { message: "Job scheduled successfully", data },
