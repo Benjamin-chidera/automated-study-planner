@@ -1,9 +1,126 @@
-import React from 'react'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
 
-const ContactPage = () => {
+import type React from "react";
+
+import { useActionState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Mail, User, MessageSquare, Send, CheckCircle } from "lucide-react";
+
+export default function Component() {
+  const [state, action, isPending] = useActionState(() => {}, null);
+
   return (
-    <div>ContactPage</div>
-  )
-}
+    <div className=" flex items-center justify-center p-4 overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-2000"></div>
+        <div className="absolute top-40 left-40 w-80 h-80 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-4000"></div>
+      </div>
 
-export default ContactPage
+      <Card className="w-full max-w-lg relative backdrop-blur-lg bg-white/10 border-blue-200  shadow-2xl mt-10">
+        <CardContent className="p-8">
+          <>
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold  mb-2">Get In Touch</h1>
+              <p className="/70">{"Let's start a conversation"}</p>
+            </div>
+
+            <form className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="/90 flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  Name
+                </Label>
+                <Input
+                  id="name"
+                  name="name"
+                  className="bg-white/10 border-blue-200   placeholder:/50 focus:bg-white/20 focus:border-white/40 transition-all duration-300"
+                  placeholder="Your full name"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email" className="/90 flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
+                  Email
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  className="bg-white/10 border-blue-200   placeholder:/50 focus:bg-white/20 focus:border-white/40 transition-all duration-300"
+                  placeholder="your.email@example.com"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label
+                  htmlFor="subject"
+                  className="/90 flex items-center gap-2"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Subject
+                </Label>
+                <Input
+                  id="subject"
+                  name="subject"
+                  className="bg-white/10 border-blue-200   placeholder:/50 focus:bg-white/20 focus:border-white/40 transition-all duration-300"
+                  placeholder="What's this about?"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="message" className="/90">
+                  Message
+                </Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  className="bg-white/10 border-blue-200  placeholder:/50 outline-none focus:outline-none focus:bg-white/20 focus:border-white/40 transition-all duration-300 min-h-[120px] resize-none"
+                  placeholder="Tell us more about your project or inquiry..."
+                  required
+                />
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full text-white bg-purple-500  font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg group cursor-pointer"
+              >
+                <Send className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform duration-300" />
+                Send Message
+              </Button>
+            </form>
+          </>
+
+          {/* <div className="text-center py-8">
+              <div className="mb-6">
+                <CheckCircle className="w-16 h-16 text-green-400 mx-auto animate-bounce" />
+              </div>
+              <h2 className="text-2xl font-bold  mb-2">Message Sent!</h2>
+              <p className="/70">
+                {"Thanks for reaching out. We'll get back to you soon."}
+              </p>
+            </div> */}
+        </CardContent>
+      </Card>
+
+      <style jsx>{`
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
+    </div>
+  );
+}

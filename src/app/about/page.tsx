@@ -12,7 +12,7 @@ const page = () => {
         </p>
 
         <p className=" mt-2 text-lg">
-          The StudyMate is a web app designed to assist students in transforming
+          The StudyM8 is a web app designed to assist students in transforming
           images, PDF or screenshots of lecture slides, textbooks, or notes into
           structured, weekly study plans, leveraging the power of AI and OCR.
         </p>
@@ -208,7 +208,7 @@ const page = () => {
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
-              Meeting the StudyMate
+              Meeting the StudyM8
             </h1>
           </div>
 
@@ -248,7 +248,7 @@ const page = () => {
         <h1 className=" font-bold text-xl md:text-3xl">Meet the Developer</h1>
 
         <p className=" mt-4 text-lg">
-          StudyMate was created by <strong>Benjamin Chidera</strong>, a student
+          StudyM8 was created by <strong>Benjamin Chidera</strong>, a student
           in the MSc Computer Science program at the University of Dundee.
           Driven by a passion for improving the student experience,
           <strong> Benjamin</strong> developed this app to help students manage
