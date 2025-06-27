@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/app/api/generate-study-plan/route.ts
 import { connectDB } from "@/lib/connect";
 import { generatePlan } from "@/lib/generate-plan";
@@ -34,20 +35,41 @@ export async function POST(req: NextRequest) {
     await connectDB();
     const user = await User.findById(userId);
     const getSummary = await Upload.findById(uploadId);
+
+    // get user availability if exists
+    const userAvailability = user?.availability || [];
+
+    const formattedAvailability =
+      userAvailability.length > 0
+        ? userAvailability
+            .map((slot: any) => {
+              return `${slot.day} from ${slot.startTime} to ${slot.endTime} (${slot.label})`;
+            })
+            .join("; ")
+        : null;
+
+    console.log("user availability: ", userAvailability);
+
+    // check if user has availability
+
     if (!getSummary) {
       return NextResponse.json({ error: "Upload not found" }, { status: 404 });
     }
 
-    const planText = (await generatePlan(getSummary.summaryText)) || "{}";
+    const planText =
+      (await generatePlan(getSummary.summaryText, formattedAvailability)) ||
+      "{}";
+    const fileName = getSummary.filename;
+    console.log(fileName);
+
     const parsedPlan = extractJSON(planText);
 
     const plan = new Planner({
       studyPlan: parsedPlan,
       uploadId,
       userId,
+      fileName,
     });
-
-    console.log(plan);
 
     await Upload.findByIdAndUpdate(uploadId, {
       $set: { hasGeneratedAStudyPlan: true },

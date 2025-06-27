@@ -11,6 +11,8 @@ interface Planner {
 
   status: string; // active, inactive, completed
   hasGeneratedAStudyPlan: boolean; // Whether a study plan has been generated for this upload
+  fileName: string; // Name of the uploaded file
+  isCompleted: boolean; // Whether the study plan has been completed
 }
 
 const plannerSchema = new Schema<Planner>(
@@ -30,6 +32,8 @@ const plannerSchema = new Schema<Planner>(
       enum: ["active", "completed"],
     },
     hasGeneratedAStudyPlan: { type: Boolean, default: false },
+    fileName: { type: String, required: true },
+    isCompleted: { type: Boolean, default: false },
   },
   {
     timestamps: true,

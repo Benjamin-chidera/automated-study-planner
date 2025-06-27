@@ -58,6 +58,7 @@
 
 // src/app/planner/page.tsx (server component)
 import { Calendar } from "@/components/calendar/calendar";
+import CompletedPlan from "./completed-plan";
 // import { type NextRequest } from "next/server";
 
 interface CalendarEvent {
@@ -106,14 +107,20 @@ export default async function PlannerPage({ searchParams }: PlannerPageProps) {
       dueDate: new Date(event.dueDate),
     })) || [];
 
-  // console.log(data?.plan?.studyPlan);
+  // console.log(data?.plan?.isCompleted);
 
   // console.log(events);
 
   return (
     <main className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Study Plan</h1>
-      <Calendar events={events} uploadId={uploadId} initialDate={null} />
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold mb-4">Study Plan</h1>
+        <CompletedPlan
+          plannerId={data?.plan?._id}
+          isCompleted={data?.plan?.isCompleted}
+        />
+      </div>
+      <Calendar events={events} uploadId={uploadId} initialDate={null}  isCompleted={data?.plan?.isCompleted}/>
     </main>
   );
 }

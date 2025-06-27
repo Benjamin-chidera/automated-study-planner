@@ -67,20 +67,20 @@ const Details = ({ detailMaterials, user }: DetailsProps) => {
   };
 
   return (
-    <main className="md:flex justify-between gap-5">
-      <section className=" hidden md:block">
+    <main className="lg:flex justify-between gap-5">
+      <section className=" hidden md:block w-full">
         <h1 className="font-bold text-xl md:text-3xl mb-5">Extracted Text</h1>
         <div className="border-2 p-3 border-[#2196F3] h-[700px] overflow-y-scroll">
-          <p className="text-lg max-w-xl">{detailMaterials?.extractedText}</p>
+          <p className="text-lg max-w-full">{detailMaterials?.extractedText}</p>
         </div>
       </section>
 
-      <section>
+      <section className="w-full mt-10 lg:mt-0">
         <h1 className="font-bold text-xl md:text-3xl mb-5">
           Generated Summary
         </h1>
         <div className="border-2 border-[#FF9800] p-3 h-[700px] overflow-y-scroll">
-          <p className="text-lg max-w-xl whitespace-pre-line">
+          <p className="text-lg max-w-full whitespace-pre-line">
             {detailMaterials?.summaryText}
           </p>
         </div>
@@ -98,7 +98,7 @@ const Details = ({ detailMaterials, user }: DetailsProps) => {
             )}
           </div>
 
-          <div className="mt-5 flex justify-between items-center">
+          <div className="mt-5 flex justify-between items-center gap-5">
             <EditModal
               text={detailMaterials?.summaryText}
               id={detailMaterials?._id}

@@ -12,7 +12,7 @@ const ProfilePage = async () => {
   const user = await getAuthUser();
   const userProfile = await getProfile(user?.userId || "");
 
-  console.log(userProfile);
+  // console.log(userProfile);
 
   return (
     <main>
@@ -20,7 +20,7 @@ const ProfilePage = async () => {
 
       <UploadHistory />
 
-      <Availability />
+      <Availability user={user} userProfile={userProfile} />
 
       <DeleteProfile />
     </main>

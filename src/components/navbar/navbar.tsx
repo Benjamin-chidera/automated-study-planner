@@ -22,7 +22,6 @@ import { MobileBottomNav } from "./mobile-bottom-nav";
 const navProfile = [
   { href: "/profile", label: "Profile" },
   { href: "/uploaded-materials", label: "Uploaded Materials" },
-  { href: "/existing-plans", label: "Exiting Plans" },
   { href: "/completed-plans", label: "Completed Plans" },
 ];
 

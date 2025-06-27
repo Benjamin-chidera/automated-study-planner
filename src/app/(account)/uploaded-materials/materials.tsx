@@ -27,6 +27,7 @@ const UploadedMaterial = async () => {
       {/* list of uploaded materials */}
 
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-7 gap-4">
+        {materials?.length === 0 && <p>Not Existing Materials</p>}
         {materials?.map((material) => (
           <MaterialsCards material={material} key={material._id} />
         ))}

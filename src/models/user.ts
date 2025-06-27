@@ -1,11 +1,33 @@
 import { Schema, models, model } from "mongoose";
 
+interface AvailabilityItem {
+  id: string;
+  day: string;
+  startTime: string;
+  endTime: string;
+  type: string; // e.g., "break", "study", etc.
+  label: string;
+}
+
 interface User {
   email: string;
   password: string;
   fullname: string;
   image: string;
+  availability?: AvailabilityItem[];
 }
+
+const availabilitySchema = new Schema<AvailabilityItem>(
+  {
+    id: { type: String, required: true },
+    day: { type: String, required: true },
+    startTime: { type: String, required: true },
+    endTime: { type: String, required: true },
+    type: { type: String, required: true },
+    label: { type: String, required: true },
+  },
+  { _id: false } // Avoids creating `_id` for each subdocument
+);
 
 const userSchema = new Schema<User>(
   {
@@ -27,6 +49,11 @@ const userSchema = new Schema<User>(
 
     image: {
       type: String,
+    },
+
+    availability: {
+      type: [availabilitySchema],
+      default: [],
     },
   },
   {

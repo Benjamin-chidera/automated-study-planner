@@ -21,9 +21,15 @@ interface CalendarProps {
   events: CalendarEvent[];
   uploadId: string | null;
   initialDate: Date | null;
+  isCompleted: boolean;
 }
 
-export const Calendar = ({ events, uploadId, initialDate }: CalendarProps) => {
+export const Calendar = ({
+  events,
+  uploadId,
+  initialDate,
+  isCompleted,
+}: CalendarProps) => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
@@ -62,7 +68,7 @@ export const Calendar = ({ events, uploadId, initialDate }: CalendarProps) => {
       }
 
       try {
-       await axios.patch(
+        await axios.patch(
           `/api/study-plan-events?uploadId=${uploadId}`,
           updatedEvent
         );
@@ -103,11 +109,20 @@ export const Calendar = ({ events, uploadId, initialDate }: CalendarProps) => {
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           initialDate={initialDate || undefined} // Focus on earliest event date
-          editable={true}
+          // editable={true}
           selectable={true}
-          droppable={false}
+          // droppable={false}
+          editable={!isCompleted}
+          droppable={!isCompleted}
           events={formattedEvents}
-          eventDrop={handleEventDrop}
+          // eventDrop={handleEventDrop}
+          eventDrop={(info) => {
+            if (isCompleted) {
+              info.revert();
+              return;
+            }
+            handleEventDrop(info);
+          }}
           headerToolbar={{
             left: "prev,next today",
             center: "title",

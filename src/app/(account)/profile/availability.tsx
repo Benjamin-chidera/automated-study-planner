@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, X, Clock, Coffee, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +22,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import axios from "axios";
+import { toast } from "sonner";
+import { SessionPayload } from "@/types/session";
+
+interface ProfileProps {
+  user: SessionPayload | undefined;
+  userProfile: any;
+}
 
 type AvailabilityType = "study" | "break";
 
@@ -60,9 +69,10 @@ const AVAILABILITY_TYPES = {
   },
 };
 
-export default function Availability() {
+export default function Availability({ user, userProfile }: ProfileProps) {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [timeBlocks, setTimeBlocks] = useState<TimeBlock[]>([]);
+  const [loading, setLoading] = useState(false);
   const [newBlock, setNewBlock] = useState({
     day: "",
     startTime: "",
@@ -71,7 +81,25 @@ export default function Availability() {
     label: "",
   });
 
+  console.log(timeBlocks);
+
   // console.log(timeBlocks); // send to server
+  // console.log(user);
+
+  useEffect(() => {
+    if (userProfile?.availability?.length > 0) {
+      setTimeBlocks(userProfile.availability); // load all saved blocks
+      const uniqueDays = [
+        ...new Set(
+          userProfile.availability.map(
+            (block: TimeBlock) => block.day as string
+          )
+        ),
+      ] as string[];
+
+      setSelectedDays(uniqueDays);
+    }
+  }, [userProfile]);
 
   const handleDayToggle = (day: string) => {
     setSelectedDays((prev) =>
@@ -79,25 +107,124 @@ export default function Availability() {
     );
   };
 
-  const addTimeBlock = () => {
+  // const addTimeBlock = async () => {
+
+  //   if (newBlock.day && newBlock.startTime && newBlock.endTime) {
+  //     const label =
+  //       newBlock.type === "study" ? "I can Study" : "I am on a Break";
+
+  //     const block: TimeBlock = {
+  //       id: Date.now().toString(), // temporary client-side ID
+  //       ...newBlock,
+  //       label, // override any manual value
+  //     };
+
+  //     try {
+  //       setLoading(true);
+
+  //       const { data } = await axios.patch(
+  //         `/api/availability/?userId=${user.userId}`,
+  //         {
+  //           newBlock: block,
+  //         }
+  //       );
+
+  //       // Use the server's latest list (safer)
+  //       setTimeBlocks(data.updatedAvailability || []);
+
+  //       setNewBlock({
+  //         day: "",
+  //         startTime: "",
+  //         endTime: "",
+  //         type: "study",
+  //         label: "",
+  //       });
+
+  //       toast.success("Time block added successfully");
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error("Failed to add block", error);
+  //       toast.error("Failed to add block");
+  //       setLoading(false);
+  //     }
+  //   }
+  // };
+
+  const addTimeBlock = async () => {
     if (newBlock.day && newBlock.startTime && newBlock.endTime) {
+      const startNew = parseInt(newBlock.startTime.replace(":", ""));
+      const endNew = parseInt(newBlock.endTime.replace(":", ""));
+
+      const hasOverlap = timeBlocks.some((block) => {
+        if (block.day !== newBlock.day) return false;
+
+        const startExisting = parseInt(block.startTime.replace(":", ""));
+        const endExisting = parseInt(block.endTime.replace(":", ""));
+
+        // Check for time overlap
+        return startNew < endExisting && endNew > startExisting;
+      });
+
+      if (hasOverlap) {
+        toast.error("This time overlaps with an existing block");
+        return;
+      }
+
+      const label =
+        newBlock.type === "study" ? "I can Study" : "I am on a Break";
+
       const block: TimeBlock = {
         id: Date.now().toString(),
         ...newBlock,
+        label,
       };
-      setTimeBlocks((prev) => [...prev, block]);
-      setNewBlock({
-        day: "",
-        startTime: "",
-        endTime: "",
-        type: "study",
-        label: "",
-      });
+
+      try {
+        setLoading(true);
+
+        const { data } = await axios.patch(
+          `/api/availability/?userId=${user?.userId}`,
+          { newBlock: block }
+        );
+
+        setTimeBlocks(data.updatedAvailability || []);
+        setNewBlock({
+          day: "",
+          startTime: "",
+          endTime: "",
+          type: "study",
+          label: "",
+        });
+
+        toast.success("Time block added successfully");
+      } catch (error) {
+        console.error("Failed to add block", error);
+        toast.error("Failed to add block");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
-  const removeTimeBlock = (id: string) => {
-    setTimeBlocks((prev) => prev.filter((block) => block.id !== id));
+  const removeTimeBlock = async (id: string) => {
+    try {
+      setLoading(true);
+
+      const updatedBlocks = timeBlocks.filter((block) => block.id !== id);
+      setTimeBlocks(updatedBlocks);
+
+      await axios.delete(`/api/availability`, {
+        data: {
+          userId: user?.userId,
+          blockId: id,
+        },
+      });
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to delete block", error);
+      setLoading(false);
+    }
   };
 
   const getBlocksForDay = (day: string) => {
@@ -256,20 +383,23 @@ export default function Availability() {
             </div>
 
             <div className=" space-y-3 ms-2">
-              <Label htmlFor="label">Label (Optional)</Label>
+              <Label htmlFor="label">Label</Label>
               <Input
                 className="focus:outline-none focus:ring-0 focus:ring-[#4F46E5] focus:border-[#4F46E5] focus:border-0 border border-[#4F46E5]"
                 placeholder="e.g. Morning Study"
-                value={newBlock.label}
-                onChange={(e) =>
-                  setNewBlock((prev) => ({ ...prev, label: e.target.value }))
+                value={
+                  newBlock.type === "study" ? "I can Study" : "I am on a Break"
                 }
+                // onChange={(e) =>
+                //   setNewBlock((prev) => ({ ...prev, label: e.target.value }))
+                // }
               />
             </div>
           </div>
 
           <Button
             onClick={addTimeBlock}
+            disabled={loading}
             className="w-full md:w-auto bg-[#4F46E5] text-white cursor-pointer"
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -296,12 +426,12 @@ export default function Availability() {
                     {getBlocksForDay(day).length > 0 ? (
                       getBlocksForDay(day).map((block) => {
                         const config = AVAILABILITY_TYPES[block.type];
-                        const Icon = config.icon;
+                        const Icon = config?.icon;
                         return (
                           <Badge
                             key={block.id}
                             variant="outline"
-                            className={`${config.color} px-3 py-2 text-sm flex items-center gap-2`}
+                            className={`${config?.color} px-3 py-2 text-sm flex items-center gap-2`}
                           >
                             <Icon className="h-4 w-4" />
                             <span>
