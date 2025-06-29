@@ -120,7 +120,12 @@ export default async function PlannerPage({ searchParams }: PlannerPageProps) {
           isCompleted={data?.plan?.isCompleted}
         />
       </div>
-      <Calendar events={events} uploadId={uploadId} initialDate={null}  isCompleted={data?.plan?.isCompleted}/>
+      <Calendar
+        events={events}
+        uploadId={uploadId}
+        initialDate={null}
+        isCompleted={data?.plan?.isCompleted}
+      />
     </main>
   );
 }

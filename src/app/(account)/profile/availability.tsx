@@ -25,7 +25,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import axios from "axios";
 import { toast } from "sonner";
 import { SessionPayload } from "@/types/session";
-
 interface ProfileProps {
   user: SessionPayload | undefined;
   userProfile: any;

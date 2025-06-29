@@ -29,27 +29,31 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
-        <main className="flex flex-col h-screen  w-11/12 md:w-10/12 lg:w-9/12 mx-auto">
-          <Navbar />
-          <div className=" grow mt-24 md:mt-26 pb-20">{children}</div>
+        {/* Full-screen animated background */}
+        <div className="fixed inset-0 -z-10 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse animation-delay-2000"></div>
+          <div className="absolute top-40 left-40 w-80 h-80 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse animation-delay-4000"></div>
+        </div>
 
+        <main className="flex flex-col min-h-screen w-11/12 md:w-10/12 lg:w-9/12 mx-auto relative z-10">
+          <Navbar />
+          <div className="grow mt-24 md:mt-26 pb-20">{children}</div>
           {/* <Footer /> */}
         </main>
 
-        <div>
-          <Toaster
-            position="top-right"
-            richColors // enables better styling
-            theme="light" // or "dark"
-            toastOptions={{
-              classNames: {
-                toast: "bg-blue-600 text-white",
-              },
-            }}
-          />
-        </div>
+        <Toaster
+          position="top-right"
+          richColors
+          theme="light"
+          toastOptions={{
+            classNames: {
+              toast: "bg-blue-600 text-white",
+            },
+          }}
+        />
       </body>
     </html>
   );

@@ -15,14 +15,7 @@ export default function Component() {
   const [state, action, isPending] = useActionState(() => {}, null);
 
   return (
-    <div className=" flex items-center justify-center p-4 overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-2000"></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-4000"></div>
-      </div>
-
+    <div className=" flex items-center justify-center p-4">
       <Card className="w-full max-w-lg relative backdrop-blur-lg bg-white/10 border-blue-200  shadow-2xl mt-10">
         <CardContent className="p-8">
           <>

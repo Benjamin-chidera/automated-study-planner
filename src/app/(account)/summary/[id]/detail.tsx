@@ -1,11 +1,12 @@
 "use client";
 
+import { useUploadStore } from "@/app/store/upload-store";
 import { EditModal } from "@/components/modals/edit-summary-modal/EditModal";
 import { Button } from "@/components/ui/button";
 import { SessionPayload } from "@/types/session";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 interface MaterialsCardsProps {
   _id: string;
@@ -23,9 +24,15 @@ interface DetailsProps {
 
 const Details = ({ detailMaterials, user }: DetailsProps) => {
   // check if study plan is already generated
-  const [isPlanGenerated, setIsPlanGenerated] = useState(false);
-  const [isCheckingPlan, setIsCheckingPlan] = useState(true); // <-- added
-  const [loading, setLoading] = useState(false);
+
+  const {
+    isPlanGenerated,
+    setIsPlanGenerated,
+    isCheckingPlan,
+    setIsCheckingPlan,
+    loading,
+    setLoading,
+  } = useUploadStore();
   const router = useRouter();
 
   useEffect(() => {
