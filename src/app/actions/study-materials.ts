@@ -18,6 +18,7 @@ export const getMyUploadedStudyMaterials = async () => {
     const uploads = await Upload.find({ userId: user?.userId }).sort({
       createdAt: -1,
     });
+
     return uploads; // console.log(uploads);
   } catch (error) {
     console.log(error);
@@ -52,8 +53,12 @@ export const deleteUploadedMaterial = async (
 
   try {
     await connectDB();
-    const upload = await Upload.findByIdAndDelete(uploadId);
+    const upload = await Upload.findByIdAndDelete(uploadId).populate("userId");
     await Planner.findOneAndDelete({ uploadId: uploadId });
+
+    const userUploads = await User.findById(upload?.userId);
+    userUploads.uploadCount -= 1;
+    await userUploads.save();
 
     if (!upload) {
       return {
@@ -136,7 +141,6 @@ export const completePlanner = async (
   }
   // redirect("/completed-plans")
 };
-
 
 export const getUserPlanner = async () => {
   const user = await getAuthUser();

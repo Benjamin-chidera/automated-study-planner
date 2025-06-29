@@ -1,72 +1,42 @@
 import { GoogleGenAI } from "@google/genai";
-
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-// export async function generatePlan(text: string, availability?: string) {
-//   // Get current date and time
-//   const now = new Date();
-//   const currentDateTime = now.toISOString();
-
-//   // Calculate minimum future time (1 hour from now)
-//   const minFutureTime = new Date(now.getTime() + 60 * 60 * 1000).toISOString();
-
-//   const response = await ai.models.generateContent({
-//     model: "gemini-2.0-flash",
-//     contents: `
-//     You are a study planner assistant. Given a study material summary, generate a weekly study plan.
-
-//     IMPORTANT: Current date and time is ${currentDateTime}
-//     All study sessions must be scheduled for ${minFutureTime} or later (at least 1 hour in the future).
-
-//     Each item should include:
-//     - A topic (based on the summary)
-//     - An ISO 8601 date-time string for when to study it (must be in the future)
-
-//     Return the result as a JSON array in this exact format, with no additional text or markdown:
-//     [
-//       { "topic": "Study Math", "dueDate": "2025-06-10T10:00:00Z" },
-//       { "topic": "Read AI Paper", "dueDate": "2025-06-11T14:00:00Z" }
-//     ]
-
-//     Summary:
-//     ${text}
-//     `,
-//   });
-
-//   return response.text;
-// }
-
-export async function generatePlan(text: string, availability?: string) {
+export async function generatePlan(
+  summaryText: string,
+  availability?: string,
+  busyTimes?: string
+) {
   const now = new Date();
   const currentDateTime = now.toISOString();
   const minFutureTime = new Date(now.getTime() + 60 * 60 * 1000).toISOString();
 
   const availabilityNote = availability
-    ? `ONLY schedule sessions within the following availability slots provided by the user: ${availability}. Do NOT schedule sessions outside of these time windows.`
-    : `No availability slots were provided, so choose any time starting from ${minFutureTime}.`;
+    ? `ONLY schedule sessions within the following availability slots: ${availability}.`
+    : `No availability was provided. Schedule anytime starting from ${minFutureTime}.`;
+
+  const busyNote = busyTimes
+    ? `Avoid scheduling during these times: ${busyTimes}`
+    : `No existing sessions to avoid.`;
 
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
     contents: `
-      You are a study planner assistant. Given a study material summary, generate a weekly study plan.
+You are a helpful AI study assistant. Your job is to create a weekly study plan based on a user's study material summary.
 
-      IMPORTANT:
-      - Current date and time: ${currentDateTime}
-      - ${availabilityNote}
-      - All sessions must be at least 1 hour in the future
+Instructions:
+- Current time: ${currentDateTime}
+- Sessions must begin at least 1 hour from now (${minFutureTime} or later)
+- ${availabilityNote}
+- ${busyNote}
+- Schedule one topic per session
+- Return only a valid JSON array of objects with this format:
 
-      Each item should include:
-      - A topic (based on the summary)
-      - An ISO 8601 datetime for when to study it (must be in the future)
+[
+  { "topic": "Topic Name", "dueDate": "2025-06-11T10:00:00Z" }
+]
 
-      Output format (JSON array only):
-      [
-        { "topic": "Study Math", "dueDate": "2025-06-10T10:00:00Z" },
-        { "topic": "Read AI Paper", "dueDate": "2025-06-11T14:00:00Z" }
-      ]
-
-      Summary:
-      ${text}
+Study Summary:
+${summaryText}
     `,
   });
 

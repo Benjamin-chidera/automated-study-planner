@@ -11,10 +11,18 @@ import { summarize } from "@/lib/summarizer";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const Upload = ({ user }: { user: string | undefined }) => {
+const Upload = ({
+  user,
+  count,
+}: {
+  user: string | undefined;
+  count: number;
+}) => {
   const [files, setFiles] = useState<File[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
+
+  console.log(count);
 
   const handleFilesAccepted = (acceptedFiles: File[]) => {
     setFiles(acceptedFiles.slice(0, 1));
@@ -23,7 +31,7 @@ const Upload = ({ user }: { user: string | undefined }) => {
   // handle file upload
   const handleUpload = async () => {
     if (files.length === 0) {
-      alert("No files selected");
+      toast.error("No files selected");
       return;
     }
 
@@ -41,13 +49,11 @@ const Upload = ({ user }: { user: string | undefined }) => {
         // Handle image OCR in the frontend
         extractedText = await OcrImage(file);
 
-        // send summarized text to backend for storage
+        // Send summarized text to backend for storage
         const summary = await summarize(extractedText);
 
-        // console.log(summary);
-
         // Send extracted text from the image to backend for storage
-        const data = await axios.post("/api/save-text", {
+        const response = await axios.post("/api/save-text", {
           extractedText: extractedText,
           userId: user,
           filename: file.name,
@@ -57,57 +63,56 @@ const Upload = ({ user }: { user: string | undefined }) => {
 
         setFiles([]);
 
-        if (data.status === 200) {
-          toast.success("PDF uploaded successfully!");
+        console.log(response);
 
+        if (response.status === 200) {
+          toast.success("Image uploaded successfully!");
           const timeout = setTimeout(() => {
             router.push("/uploaded-materials");
           }, 2000);
-
-          // clear timeout after 2 seconds
           return () => clearTimeout(timeout);
+        } else {
+          throw new AxiosError(
+            "Unexpected response status",
+            response.status.toString()
+          );
         }
       } else if (file instanceof File && file.type === "application/pdf") {
         // Send PDF to backend for text extraction
-        const data = await axios.post("/api/upload", formData, {
+        const response = await axios.post("/api/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
+
         setFiles([]);
 
-        if (data.status === 200) {
+        if (response.status === 200) {
           toast.success("PDF uploaded successfully!");
-
           const timeout = setTimeout(() => {
             router.push("/uploaded-materials");
           }, 2000);
-
-          // clear timeout after 2 seconds
           return () => clearTimeout(timeout);
+        } else {
+          throw new AxiosError(
+            "Unexpected response status",
+            response.status.toString()
+          );
         }
       } else {
-        // alert("Selected file is not an image or PDF");
         toast.error("Selected file is not an image or PDF");
         return;
       }
-
-      //   change to a success message (modal)
-      // return <Toast />;
-      // toast.success("Text extracted and saved successfully!");
-      // alert("Text extracted and saved successfully!");
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         console.error("Error:", error.response?.data || error.message);
-
-        // change to an error message (modal)
-        // alert(`Error: ${error.response?.data?.error || error.message}`);
-        toast.error(`Error: ${error.response?.data?.error || error.message}`);
+        const errorMessage =
+          error.response?.status === 403
+            ? "Upload limit reached (5 uploads maximum)"
+            : error.response?.data?.error || error.message;
+        toast.error(`Error: ${errorMessage}`);
       } else {
         console.error("Unexpected error:", error);
-
-        // change to an error message (modal)
-        // alert("An unexpected error occurred");
         toast.error("An unexpected error occurred");
       }
     } finally {
@@ -117,7 +122,12 @@ const Upload = ({ user }: { user: string | undefined }) => {
 
   return (
     <main>
-      <h1 className="font-bold text-xl md:text-3xl">Upload Study Material</h1>
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="font-bold text-xl md:text-3xl">Upload Study Material</h1>
+        <p className="text-gray-600 text-sm md:text-base font-bold">
+          {count}/5
+        </p>
+      </div>
       <div className="mt-10">
         <FileDropzone onFilesAccepted={handleFilesAccepted} />
 
@@ -138,7 +148,7 @@ const Upload = ({ user }: { user: string | undefined }) => {
       <div className="text-right">
         <Button
           className="mt-7 bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
-          disabled={files.length === 0 || isProcessing}
+          disabled={files.length === 0 || isProcessing || count >= 5}
           onClick={handleUpload}
         >
           {isProcessing ? "Processing..." : "Run OCR"}

@@ -14,6 +14,7 @@ interface User {
   password: string;
   fullname: string;
   image: string;
+  uploadCount: number;
   availability?: AvailabilityItem[];
 }
 
@@ -50,6 +51,8 @@ const userSchema = new Schema<User>(
     image: {
       type: String,
     },
+
+    uploadCount: { type: Number, default: 0 },
 
     availability: {
       type: [availabilitySchema],

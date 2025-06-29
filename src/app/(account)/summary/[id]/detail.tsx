@@ -60,7 +60,7 @@ const Details = ({ detailMaterials, user }: DetailsProps) => {
         uploadId: detailMaterials._id,
         userId: user,
       });
-      console.log(data);
+      // console.log(data);
 
       if (data?.success) {
         // Redirect to calendar page with upload ID

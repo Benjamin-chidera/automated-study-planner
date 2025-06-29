@@ -18,6 +18,7 @@ interface userProps {
   email?: string | undefined;
   password?: string;
   imageUrl?: string | undefined;
+  uploadCount?: number | undefined;
   // message?: string;
 }
 
