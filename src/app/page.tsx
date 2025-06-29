@@ -2,6 +2,43 @@ import { Upload } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+// seo
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home - StudyM8",
+  description:
+    "Plan, track, and achieve your study goals effortlessly with StudyM8.",
+  keywords: [
+    "StudyM8",
+    "AI study planner",
+    "student productivity",
+    "study schedule",
+  ],
+  openGraph: {
+    title: "StudyM8 - Smart Study Planner",
+    description: "Smart AI-powered study planning built for students.",
+    url: "https://studym8.vercel.app",
+    siteName: "StudyM8",
+    images: [
+      {
+        url: "https://studym8.vercel.app/hero-img.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "StudyM8 - Smarter Study Planner",
+    description:
+      "Create and manage study plans with AI. For students who want to study smarter.",
+    images: ["https://studym8.vercel.app/hero-img.jpg"],
+  },
+};
+
 export default function Home() {
   return (
     <main className="">

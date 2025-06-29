@@ -10,9 +10,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, User, MessageSquare, Send, CheckCircle } from "lucide-react";
+import { ContactForm } from "../actions/contact";
 
 export default function Component() {
-  const [state, action, isPending] = useActionState(() => {}, null);
+  const [state, action, isPending] = useActionState(ContactForm, null);
 
   return (
     <div className=" flex items-center justify-center p-4">
@@ -24,7 +25,7 @@ export default function Component() {
               <p className="/70">{"Let's start a conversation"}</p>
             </div>
 
-            <form className="space-y-6">
+            <form className="space-y-6" action={action}>
               <div className="space-y-2">
                 <Label htmlFor="name" className="/90 flex items-center gap-2">
                   <User className="w-4 h-4" />
@@ -35,8 +36,11 @@ export default function Component() {
                   name="name"
                   className="bg-white/10 border-blue-200   placeholder:/50 focus:bg-white/20 focus:border-white/40 transition-all duration-300"
                   placeholder="Your full name"
-                  required
                 />
+
+                {state?.errors?.name && (
+                  <p className=" text-red-500 text-xs">{state?.errors?.name}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -50,8 +54,13 @@ export default function Component() {
                   type="email"
                   className="bg-white/10 border-blue-200   placeholder:/50 focus:bg-white/20 focus:border-white/40 transition-all duration-300"
                   placeholder="your.email@example.com"
-                  required
                 />
+
+                {state?.errors?.email && (
+                  <p className=" text-red-500 text-xs">
+                    {state?.errors?.email}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -67,8 +76,13 @@ export default function Component() {
                   name="subject"
                   className="bg-white/10 border-blue-200   placeholder:/50 focus:bg-white/20 focus:border-white/40 transition-all duration-300"
                   placeholder="What's this about?"
-                  required
                 />
+
+                {state?.errors?.subject && (
+                  <p className=" text-red-500 text-xs">
+                    {state?.errors?.subject}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -80,13 +94,19 @@ export default function Component() {
                   name="message"
                   className="bg-white/10 border-blue-200  placeholder:/50 outline-none focus:outline-none focus:bg-white/20 focus:border-white/40 transition-all duration-300 min-h-[120px] resize-none"
                   placeholder="Tell us more about your project or inquiry..."
-                  required
                 />
+
+                {state?.errors?.message && (
+                  <p className=" text-red-500 text-xs">
+                    {state?.errors?.message}
+                  </p>
+                )}
               </div>
 
               <Button
                 type="submit"
                 className="w-full text-white bg-purple-500  font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg group cursor-pointer"
+                disabled={isPending}
               >
                 <Send className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform duration-300" />
                 Send Message

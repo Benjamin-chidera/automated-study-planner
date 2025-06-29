@@ -18,3 +18,10 @@ export const LoginSchema = z.object({
   email: z.string().email({ message: "Invalid email format" }).trim(),
   password: z.string().min(1, { message: "Password must not be empty" }).trim(),
 });
+
+export const ContactFormSchema = z.object({
+  name: z.string().nonempty({ message: "Name is required" }),
+  email: z.string().email({ message: "Invalid email format" }).trim(),
+  subject: z.string().min(1, { message: "Subject must not be empty" }).trim(),
+  message: z.string().min(1, { message: "Message must not be empty" }).trim(),
+});

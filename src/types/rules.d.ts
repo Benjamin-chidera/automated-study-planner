@@ -22,6 +22,16 @@ export interface FormStates {
   };
 }
 
+export interface ContactFormState {
+  message: string;
+  errors?: {
+    name?: string[] | string;
+    email?: string[] | string;
+    subject?: string[] | string;
+    message?: string[] | string;
+  };
+}
+
 // Define the DeleteState interface
 export interface DeleteState {
   message: string;

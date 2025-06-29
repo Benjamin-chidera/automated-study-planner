@@ -12,3 +12,11 @@ export type LoginErrors = {
   password?: string[];
   general?: string[];
 };
+
+export type ContactErrors = {
+  name?: string[];
+  email?: string[];
+  subject?: string[];
+  message?: string[];
+  general?: string[];
+};

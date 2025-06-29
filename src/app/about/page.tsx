@@ -1,5 +1,39 @@
 import Image from "next/image";
 import React from "react";
+// seo
+import { Metadata } from "next";
+
+// this is for SEO purposes
+export const metadata: Metadata = {
+  title: "About - StudyM8",
+  description:
+    "Learn more about StudyM8 and our mission to simplify study planning.",
+  keywords: ["StudyM8", "study planner", "student productivity"],
+  openGraph: {
+    title: "About - StudyM8",
+    description: "We make study planning smarter and easier.",
+    url: "https://studym8.vercel.app/about",
+    siteName: "StudyM8",
+    images: [
+      {
+        url: "https://studym8.vercel.app/study-materials.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About StudyM8",
+    description:
+      "StudyM8 helps students plan and track their study goals effectively.",
+    images: [
+      "https://studym8.vercel.app/study-materials.png",
+    ],
+  },
+};
 
 const page = () => {
   return (
@@ -248,9 +282,9 @@ const page = () => {
         <h1 className=" font-bold text-xl md:text-3xl">Meet the Developer</h1>
 
         <p className=" mt-4 text-lg">
-          StudyM8 was created by <strong>Benjamin Chidera</strong>, a student
-          in the MSc Computer Science program at the University of Dundee.
-          Driven by a passion for improving the student experience,
+          StudyM8 was created by <strong>Benjamin Chidera</strong>, a student in
+          the MSc Computer Science program at the University of Dundee. Driven
+          by a passion for improving the student experience,
           <strong> Benjamin</strong> developed this app to help students manage
           their studies more effectively.
         </p>
