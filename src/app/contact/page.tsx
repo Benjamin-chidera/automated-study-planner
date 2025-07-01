@@ -16,8 +16,8 @@ export default function Component() {
   const [state, action, isPending] = useActionState(ContactForm, null);
 
   return (
-    <div className=" flex items-center justify-center p-4">
-      <Card className="w-full max-w-lg relative backdrop-blur-lg bg-white/10 border-blue-200  shadow-2xl mt-10">
+    <div className=" flex items-center justify-center">
+      <Card className="w-full max-w-lg relative backdrop-blur-lg bg-white/10 border-blue-200 shadow-2xl mt-10">
         <CardContent className="p-8">
           <>
             <div className="text-center mb-8">
