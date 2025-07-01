@@ -85,7 +85,7 @@ export const Calendar = ({
   };
 
   return (
-    <main className="p-4 md:flex gap-8 h-[600px]">
+    <main className="flex flex-col md:flex-row gap-4 h-auto md:h-[600px]">
       {error && <p className="text-red-500 mb-2">{error}</p>}
 
       <div className="w-1/4 p-4 border hidden md:block  overflow-y-scroll">
@@ -106,6 +106,9 @@ export const Calendar = ({
 
       <div className="flex-1">
         <FullCalendar
+          dayMaxEventRows={2}
+          contentHeight="auto"
+          aspectRatio={window.innerWidth < 768 ? 0.6 : 1.35}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           initialDate={initialDate || undefined} // Focus on earliest event date

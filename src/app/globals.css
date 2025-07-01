@@ -1,3 +1,17 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@media (max-width: 768px) {
+  .fc .fc-toolbar-title {
+    font-size: 1rem !important;
+  }
+
+  .fc .fc-button {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .fc .fc-daygrid-event {
+    font-size: 0.75rem !important;
+  }
+}

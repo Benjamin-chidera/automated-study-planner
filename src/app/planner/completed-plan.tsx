@@ -36,7 +36,7 @@ const CompletedPlan = ({
 //   console.log(isCompleted);
 
   return (
-    <main className="text-right mt-10">
+    <main className="text-right md:mt-3">
       {showConfetti && <Confetti width={width} height={height} />}
       {!isCompleted && (
         <form action={action}>
