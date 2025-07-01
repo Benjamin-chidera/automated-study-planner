@@ -17,8 +17,8 @@ export default function Component() {
 
   return (
     <div className=" flex items-center justify-center">
-      <Card className="w-full max-w-lg relative backdrop-blur-lg bg-white/10 border-blue-200 shadow-2xl mt-10">
-        <CardContent className="p-8">
+      <Card className="w-full max-w-lg relative backdrop-blur-lg bg-white/10 border-blue-200 shadow-2xl mt-0 md:mt-10">
+        <CardContent className=" p-4 md:p-8">
           <>
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold  mb-2">Get In Touch</h1>
