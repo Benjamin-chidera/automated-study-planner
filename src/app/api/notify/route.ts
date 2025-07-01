@@ -15,7 +15,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const scheduleUrl =
-    `${process.env.QSTASH_URL}/v2/schedules/${process.env.QSTASH_SCHEDULE_ID}`;
+    `${process.env.QSTASH_URL}/v2/schedules/${process.env.QSTASH_SCHEDULE_ID}` ;
 
   try {
     const response = await fetch(scheduleUrl, {
