@@ -1,4 +1,12 @@
-import { Upload } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  FileText,
+  Rocket,
+  SlidersHorizontal,
+  Upload,
+  User,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -85,7 +93,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <Upload size={32} className="text-indigo-600" />
+            <FileText size={32} className="text-indigo-600" />
             <h3 className="font-bold text-lg text-gray-700">Extract</h3>
             <p className="text-sm text-gray-500">
               AI extracts and summarizes your content
@@ -93,7 +101,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <Upload size={32} className="text-indigo-600" />
+            <Calendar size={32} className="text-indigo-600" />
             <h3 className="font-bold text-lg text-gray-700">Plan</h3>
             <p className="text-sm text-gray-500">
               Generate a smart, personalized study plan
@@ -101,7 +109,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <Upload size={32} className="text-indigo-600" />
+            <SlidersHorizontal size={32} className="text-indigo-600" />
             <h3 className="font-bold text-lg text-gray-700">Track</h3>
             <p className="text-sm text-gray-500">
               Mark tasks done and tweak your schedule
@@ -119,26 +127,31 @@ export default function Home() {
 
         <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <Upload size={32} className="text-indigo-600" />
-            <h3 className="font-bold text-lg text-gray-700">Track</h3>
+            {/* <Upload/> */}
+            <Clock size={32} className="text-indigo-600" />
+            <h3 className="font-bold text-lg text-gray-700">Save Time</h3>
             <p className="text-sm text-gray-500">
-              Mark tasks done and tweak your schedule
+              Automate your study planning and focus on learning.
             </p>
           </div>
 
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <Upload size={32} className="text-indigo-600" />
-            <h3 className="font-bold text-lg text-gray-700">Track</h3>
+            <Rocket size={32} className="text-indigo-600" />
+            <h3 className="font-bold text-lg text-gray-700">
+              Boost Productivity
+            </h3>
             <p className="text-sm text-gray-500">
-              Mark tasks done and tweak your schedule
+              Maximize your study efficiency with tailored schedule.
             </p>
           </div>
 
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <Upload size={32} className="text-indigo-600" />
-            <h3 className="font-bold text-lg text-gray-700">Track</h3>
+            <User size={32} className="text-indigo-600" />
+            <h3 className="font-bold text-lg text-gray-700">
+              Personalized Schedule
+            </h3>
             <p className="text-sm text-gray-500">
-              Mark tasks done and tweak your schedule
+              Get a study plan that fit your unique needs and goals.
             </p>
           </div>
         </div>
