@@ -73,7 +73,7 @@ const LoginPage = () => {
           </Button>
         </form>
 
-        <p className="mt-5 text-center max-w-lg md:max-w-full text-sm">
+        {/* <p className="mt-5 text-center max-w-lg md:max-w-full text-sm">
           Or continue with
         </p>
 
@@ -87,7 +87,7 @@ const LoginPage = () => {
             />
             Continue With Google
           </Button>
-        </div>
+        </div> */}
 
         <div className="flex gap-3 text-sm mt-5 items-center">
           <p>Don’t have an account? </p>{" "}
