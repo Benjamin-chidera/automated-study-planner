@@ -96,7 +96,7 @@ const RegisterPage = () => {
           </Button>
         </form>
 
-        <p className="mt-5 text-center max-w-lg md:max-w-full text-sm">
+        {/* <p className="mt-5 text-center max-w-lg md:max-w-full text-sm">
           Or continue with
         </p>
 
@@ -110,7 +110,7 @@ const RegisterPage = () => {
             />
             Continue With Google
           </Button>
-        </div>
+        </div> */}
 
         <div className="flex gap-3 text-sm mt-5 items-center">
           <p>Already have an account? </p>{" "}
