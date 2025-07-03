@@ -58,7 +58,8 @@ export default function Home() {
           alt="Hero image"
           fill
           className="object-cover object-center rounded-2xl"
-          priority
+          // priority
+          loading="lazy"
         />
 
         {/* Overlay text container */}

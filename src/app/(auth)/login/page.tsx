@@ -105,6 +105,7 @@ const LoginPage = () => {
             width={500}
             height={500}
             className=" w-full h-[400px] lg:h-[700px]"
+            loading="lazy"
           />
         </div>
       </section>

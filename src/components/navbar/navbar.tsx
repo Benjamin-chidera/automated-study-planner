@@ -50,6 +50,7 @@ export const Navbar = async () => {
                 height={150}
                 width={150}
                 alt="logo"
+                loading="lazy"
                 className=" h-20 w-20"
               />
             </Link>
@@ -129,6 +130,7 @@ export const Navbar = async () => {
                 height={150}
                 width={150}
                 alt="logo"
+                loading="lazy"
                 className=" h-14 w-14 bg-white rounded-full"
               />
             </Link>

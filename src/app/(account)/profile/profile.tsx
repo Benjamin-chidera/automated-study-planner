@@ -90,6 +90,7 @@ const Profile = ({ user, userProfile }: ProfileProps) => {
                   alt="Profile Image"
                   className="object-cover w-full h-full"
                   fill
+                  loading="lazy"
                   style={{ objectFit: "cover" }}
                 />
               ) : (

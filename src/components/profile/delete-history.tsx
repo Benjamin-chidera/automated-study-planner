@@ -29,8 +29,11 @@ export const DeleteHistory = ({ uploadId }: { uploadId: string }) => {
       <form action={action}>
         <input type="hidden" name="uploadId" value={uploadId} />
         {/* <input type="hidden" name="uploadId" defaultValue={uploadId.uploadId} /> */}
-        <Button className="text-red-500 font-bold shadow-none cursor-pointer">
-          {isPending ? "Deleting." : "Delete"}
+        <Button
+          className="text-red-500 font-bold shadow-none cursor-pointer"
+          disabled={isPending}
+        >
+          Delete
         </Button>
       </form>
     </div>
