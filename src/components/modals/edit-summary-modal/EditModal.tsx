@@ -12,31 +12,33 @@ import { Button } from "../../ui/button";
 import { SquarePen } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export const EditModal = ({ text, id }: { text: string; id: string }) => {
-  const [editedText, setEditedText] = useState(text); // use state for changes
-
-  // console.log(id);
+  const [editedText, setEditedText] = useState(text);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false); // control dialog open state
+  const router = useRouter();
 
   const handleSave = async () => {
+    setLoading(true);
     try {
-      const { data } = await axios.patch(
-        `/api/summary-edit/${id}`,
-        {
-          newSummary: editedText,
-        }
-      );
-
-      console.log("Updated summary:", data);
+      await axios.patch(`/api/summary/${id}`, {
+        newSummary: editedText,
+      });
       toast.success("Summary updated successfully!");
+      router.refresh();
+      setLoading(false);
+      setOpen(false);  // <-- close dialog here
     } catch (error) {
       console.error("Error updating summary:", error);
       toast.error("Failed to update summary. Please try again.");
+      setLoading(false);
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="bg-[#4F46E5] text-white cursor-pointer">
           <SquarePen />
@@ -59,8 +61,9 @@ export const EditModal = ({ text, id }: { text: string; id: string }) => {
           <Button
             onClick={handleSave}
             className="bg-[#4F46E5] hover:bg-blue-900 cursor-pointer text-white"
+            disabled={loading}
           >
-            Save
+            {loading ? "Saving..." : "Save"}
           </Button>
         </div>
       </DialogContent>
