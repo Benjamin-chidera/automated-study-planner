@@ -29,9 +29,7 @@ export const metadata: Metadata = {
     title: "About StudyM8",
     description:
       "StudyM8 helps students plan and track their study goals effectively.",
-    images: [
-      "https://studym8.vercel.app/study-materials.png",
-    ],
+    images: ["https://studym8.vercel.app/study-materials.png"],
   },
 };
 
@@ -63,6 +61,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
+              loading="lazy"
               className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
@@ -83,6 +82,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
+              loading="lazy"
               className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
@@ -103,6 +103,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
+              loading="lazy"
               className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
@@ -121,6 +122,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
+              loading="lazy"
               className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
@@ -155,6 +157,7 @@ const page = () => {
             alt="Study materials"
             height={50}
             width={50}
+            loading="lazy"
           />
 
           <div>
@@ -171,6 +174,7 @@ const page = () => {
             alt="Study materials"
             height={50}
             width={50}
+            loading="lazy"
           />
 
           <div>
@@ -187,6 +191,7 @@ const page = () => {
             alt="Study materials"
             height={50}
             width={50}
+            loading="lazy"
           />
 
           <div>
@@ -201,6 +206,7 @@ const page = () => {
             alt="Study materials"
             height={50}
             width={50}
+            loading="lazy"
           />
 
           <div>
@@ -223,6 +229,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
+              loading="lazy"
               className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
@@ -238,6 +245,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
+              loading="lazy"
               className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
@@ -253,6 +261,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
+              loading="lazy"
               className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
             />
 
@@ -268,6 +277,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
+              loading="lazy"
               className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-2xl"
             />
 
