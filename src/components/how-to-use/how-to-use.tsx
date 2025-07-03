@@ -10,7 +10,6 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -66,28 +65,28 @@ export const HowToUse = () => {
         }}
         className="w-full max-w-5xl mx-auto"
       >
-        <CarouselContent className="">
+        <CarouselContent>
           {HowToUseData.map((item, i) => (
-            <CarouselItem key={i} className="">
-              <div className="p-1">
-                <Card className=" h-full border border-blue-700">
+            <CarouselItem key={i}>
+              <div className="p-1 h-full">
+                <Card className="h-full min-h-[550px] flex flex-col justify-between border border-blue-700">
                   <CardHeader>
                     <CardTitle className="text-xl font-bold">
                       {item.title}
                     </CardTitle>
-                    <CardDescription>
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        height={500}
-                        width={500}
-                        loading="lazy"
-                        className="w-full h-full object-contain max-w-full"
-                      />
-                    </CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <p>{item.description}</p>
+                  <div className="px-4">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      height={300}
+                      width={500}
+                      loading="lazy"
+                      className="w-full h-[400px] rounded-md border"
+                    />
+                  </div>
+                  <CardContent className="mt-4 px-6 pb-6">
+                    <p className="text-sm text-gray-700">{item.description}</p>
                   </CardContent>
                 </Card>
               </div>
@@ -95,7 +94,7 @@ export const HowToUse = () => {
           ))}
         </CarouselContent>
 
-        <div className=" hidden md:block">
+        <div className="hidden md:block">
           <CarouselPrevious />
           <CarouselNext />
         </div>
@@ -103,3 +102,4 @@ export const HowToUse = () => {
     </main>
   );
 };
+
