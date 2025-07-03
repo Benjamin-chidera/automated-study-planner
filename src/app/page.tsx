@@ -12,6 +12,7 @@ import Link from "next/link";
 
 // seo
 import { Metadata } from "next";
+import { HowToUse } from "@/components/how-to-use/how-to-use";
 
 export const metadata: Metadata = {
   title: "Home - StudyM8",
@@ -175,6 +176,12 @@ export default function Home() {
             Start Planning
           </Link>
         </div>
+      </section>
+
+      {/* how it works */}
+
+      <section className="mt-20">
+        <HowToUse />
       </section>
     </main>
   );
