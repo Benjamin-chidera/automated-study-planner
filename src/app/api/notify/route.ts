@@ -22,7 +22,7 @@ export async function GET() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Upstash-Cron": "* * * * *", // Run every hour
+        "Upstash-Cron": "0 * * * *", // Run every hour
         Authorization:
           `Bearer ${process.env.QSTASH_TOKEN}`,
       },
