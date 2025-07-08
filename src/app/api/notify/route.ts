@@ -27,7 +27,7 @@ export async function GET() {
           `Bearer ${process.env.QSTASH_TOKEN}`,
       },
       body: JSON.stringify({
-        description: "StudyMate - Automated Study Planner Notification Job",
+        description: "StudyM8 - Automated Study Planner Notification Job",
       }),
     });
 
