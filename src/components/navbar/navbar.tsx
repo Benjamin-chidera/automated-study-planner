@@ -7,7 +7,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -16,8 +15,8 @@ import Image from "next/image";
 import { NavLink } from "./nav";
 import { Menu } from "./menu";
 import { getAuthUser } from "@/lib/getUser";
-import { logout } from "@/app/actions/auth";
 import { MobileBottomNav } from "./mobile-bottom-nav";
+import SmartLogout from "./smart-logout";
 
 const navProfile = [
   { href: "/profile", label: "Profile" },
@@ -105,13 +104,7 @@ export const Navbar = async () => {
 
                   {/* this is the logout button */}
 
-                  <form action={logout}>
-                    <button className="w-full">
-                      <DropdownMenuItem className="bg-white text-black font-bold cursor-pointer">
-                        Logout
-                      </DropdownMenuItem>
-                    </button>
-                  </form>
+                  <SmartLogout />
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
@@ -147,7 +140,10 @@ export const Navbar = async () => {
               <DropdownMenu>
                 <DropdownMenuTrigger className=" border-none outline-none cursor-pointer">
                   <Avatar>
-                    {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
+                    {typeof user?.userImage === "string" && (
+                      <AvatarImage src={user?.userImage} />
+                    )}
+
                     <AvatarFallback className=" text-white bg-[#4F46E5] font-bold">
                       {initials}
                     </AvatarFallback>
@@ -163,13 +159,7 @@ export const Navbar = async () => {
 
                   {/* this is the logout button */}
 
-                  <form action={logout}>
-                    <button className="w-full">
-                      <DropdownMenuItem className="bg-white text-black font-bold cursor-pointer">
-                        Logout
-                      </DropdownMenuItem>
-                    </button>
-                  </form>
+                  <SmartLogout />
                 </DropdownMenuContent>
               </DropdownMenu>
             )}

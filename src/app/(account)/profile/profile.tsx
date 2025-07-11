@@ -31,6 +31,8 @@ const Profile = ({ user, userProfile }: ProfileProps) => {
     undefined
   );
 
+  console.log(userProfile);
+
   const { name, email, oldPassword, newPassword } = useProfileStore();
 
   useEffect(() => {

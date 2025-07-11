@@ -16,6 +16,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { AlertTriangle, Trash2 } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 interface ProfileProps {
   user: SessionPayload | undefined;
@@ -34,6 +35,7 @@ export const ProfileDeleted = ({ user }: ProfileProps) => {
     try {
       // Call the server action
       await action(formData);
+      signOut({ redirect: false })
 
       // Close dialog
       setIsDialogOpen(false);

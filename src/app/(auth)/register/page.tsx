@@ -1,20 +1,37 @@
 "use client";
 
 import Image from "next/image";
-import React, { useActionState, useState } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
 import { register } from "@/app/actions/auth";
+import { signIn, useSession } from "next-auth/react";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [state, action, pending] = useActionState(register, undefined);
+  const { status } = useSession();
+  // console.log(status);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      window.location.href = "/upload";
+    }
+  }, [status]);
 
   const handleShow = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleGoogleRegister = async () => {
+    try {
+      await signIn("google", { callbackUrl: "/upload" });
+    } catch (error) {
+      console.error("Google login error:", error);
+    }
   };
 
   return (
@@ -96,12 +113,15 @@ const RegisterPage = () => {
           </Button>
         </form>
 
-        {/* <p className="mt-5 text-center max-w-lg md:max-w-full text-sm">
+        <p className="mt-5 text-center max-w-lg md:max-w-full text-sm">
           Or continue with
         </p>
 
         <div className=" text-center max-w-lg md:max-w-full mt-7">
-          <Button className=" hover:bg-blue-600 hover:text-white font-bold w-full rounded-full cursor-pointer">
+          <Button
+            className=" hover:bg-blue-600 hover:text-white font-bold w-full rounded-full cursor-pointer"
+            onClick={handleGoogleRegister}
+          >
             <Image
               src={"/google-img.png"}
               width={20}
@@ -110,7 +130,7 @@ const RegisterPage = () => {
             />
             Continue With Google
           </Button>
-        </div> */}
+        </div>
 
         <div className="flex gap-3 text-sm mt-5 items-center">
           <p>Already have an account? </p>{" "}
