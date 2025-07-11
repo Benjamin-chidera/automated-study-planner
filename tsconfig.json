@@ -23,6 +23,14 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/utils/imageToText.ts", "src/utils/email-template.mjml"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/utils/imageToText.ts",
+    "src/utils/email-template.mjml",
+    "src/lib/authProvider.tsx"
+, "src/app/api/auth/[...nextauth]"  ],
   "exclude": ["node_modules"]
 }

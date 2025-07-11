@@ -53,9 +53,9 @@ export const emailTemplates = {
       <div class="container">
         <div class="header">
           {{#if logoUrl}}
-            <img src="{{logoUrl}}" alt="StudyMate" class="logo">
+            <img src="{{logoUrl}}" alt="StudyM8" class="logo">
           {{else}}
-            <h1>StudyMate</h1>
+            <h1>StudyM8</h1>
           {{/if}}
         </div>
         <div class="content">
@@ -66,7 +66,7 @@ export const emailTemplates = {
           {{/if}}
         </div>
         <div class="footer">
-          <p>&copy; {{date}} StudyMate. All rights reserved.</p>
+          <p>&copy; {{date}} StudyM8. All rights reserved.</p>
           <p>Hello {{fullname}}, thank you for using our service!</p>
         </div>
       </div>
@@ -128,20 +128,20 @@ export const emailTemplates = {
       <div class="container">
        <div class="header">
           {{#if logoUrl}}
-            <img src="{{logoUrl}}" alt="StudyMate" class="logo">
+            <img src="{{logoUrl}}" alt="StudyM8" class="logo">
           {{else}}
-            <h1>StudyMate</h1>
+            <h1>StudyM8</h1>
           {{/if}}
         </div>
         <div class="content">
-          <h2>Hello {{fullname}}, Welcome to StudyMate!</h2>
+          <h2>Hello {{fullname}}, Welcome to StudyM8!</h2>
           <p>{{body}}</p>
          {{#if ctaText}}
             <a href="{{ctaLink}}" class="cta-button">{{ctaText}}</a>
           {{/if}}
         </div>
         <div class="footer">
-          <p>&copy; {{date}} StudyMate. All rights reserved.</p>
+          <p>&copy; {{date}} StudyM8. All rights reserved.</p>
         </div>
       </div>
     </body>
@@ -202,21 +202,21 @@ export const emailTemplates = {
     <div class="container">
       <div class="header">
         {{#if logoUrl}}
-          <img src="{{logoUrl}}" alt="StudyMate" class="logo">
+          <img src="{{logoUrl}}" alt="StudyM8" class="logo">
         {{else}}
-          <h1>StudyMate</h1>
+          <h1>StudyM8</h1>
         {{/if}}
       </div>
       <div class="content">
         <h2>Hey {{fullname}},</h2>
-        <p>Thank you for reaching out to StudyMate!</p>
+        <p>Thank you for reaching out to StudyM8!</p>
         <p>We've received your message and our team will get back to you as soon as possible. If your message was about a bug, request, or general help, we appreciate your patience and will do our best to assist you.</p>
         {{#if ctaText}}
           <a href="{{ctaLink}}" class="cta-button">{{ctaText}}</a>
         {{/if}}
       </div>
       <div class="footer">
-        <p>&copy; {{date}} StudyMate. All rights reserved.</p>
+        <p>&copy; {{date}} StudyM8. All rights reserved.</p>
         <p>You're receiving this email because you contacted us via our support or contact form.</p>
       </div>
     </div>

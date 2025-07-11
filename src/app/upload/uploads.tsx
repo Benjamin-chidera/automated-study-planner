@@ -3,12 +3,12 @@
 
 import FileDropzone from "@/components/drag-drop/drag-drop";
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import OcrImage from "@/components/ocr/ocr-image";
 
 import { summarize } from "@/lib/summarizer";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 const Upload = ({
@@ -21,8 +21,25 @@ const Upload = ({
   const [files, setFiles] = useState<File[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  console.log(count);
+
+  const [hasRefreshed, setHasRefreshed] = useState(false);
+
+  // console.log(count);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("refresh") === "true") {
+      window.location.replace("/upload");
+      // After a login redirect, the page data might be stale from the cache.
+      // This forces a refresh of the server data without a full page reload.
+      if (searchParams.get("refresh") === "true" && !hasRefreshed) {
+        setHasRefreshed(true);
+        router.refresh();
+      }
+    }
+  }, [searchParams, router, hasRefreshed]);
 
   const handleFilesAccepted = (acceptedFiles: File[]) => {
     setFiles(acceptedFiles.slice(0, 1));

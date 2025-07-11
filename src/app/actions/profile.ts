@@ -12,7 +12,6 @@ import sendEmail from "@/utils/sendEmail";
 import { redirect } from "next/navigation";
 import { deleteSession } from "@/lib/session";
 
-
 interface userProps {
   fullname?: string | undefined;
   email?: string | undefined;
@@ -251,7 +250,6 @@ export const deleteUser = async (
   redirect("/login");
 };
 
-
 export async function getProfile(userId: string): Promise<userProps | null> {
   try {
     await connectDB();
@@ -262,7 +260,6 @@ export async function getProfile(userId: string): Promise<userProps | null> {
     }
 
     return JSON.parse(JSON.stringify(user));
-    
   } catch (error) {
     console.log(error);
     // return {
@@ -270,6 +267,5 @@ export async function getProfile(userId: string): Promise<userProps | null> {
     //   errors: { userId: "An error occurred while getting the profile" }
     // }
     return null;
-    
   }
 }
