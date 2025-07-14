@@ -40,7 +40,7 @@ export const Navbar = async () => {
   return (
     <main>
       {/* top nav for mobile */}
-      <nav className="hidden fixed top-5 left-1/2 transform -translate-x-1/2 z-50 backdrop-blur-md bg-white/30 border-white/20 rounded-full shadow-lg md:flex justify-between px-5 items-center h-16 w-11/12 md:w-10/12 lg:w-9/12 mx-auto border">
+      <nav className="hidden fixed top-5 left-1/2 transform -translate-x-1/2 z-50 backdrop-blur-md bg-white/30 border-white/20 rounded-full shadow-lg md:flex justify-between px-5 items-center h-12 w-11/12 md:w-10/12 lg:w-9/12 mx-auto border">
         <section>
           <div>
             <Link href={"/"}>
@@ -50,7 +50,7 @@ export const Navbar = async () => {
                 width={150}
                 alt="logo"
                 loading="lazy"
-                className=" h-20 w-20"
+                className=" h-16 w-16"
               />
             </Link>
           </div>

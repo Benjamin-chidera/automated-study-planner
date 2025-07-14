@@ -56,7 +56,7 @@ const HowToUseData = [
 export const HowToUse = () => {
   return (
     <main>
-      <h1 className="font-black text-4xl text-gray-800 capitalize text-center mb-10">
+      <h1 className="font-black text-2xl text-gray-800 capitalize text-center mb-10">
         How to Use
       </h1>
       <Carousel

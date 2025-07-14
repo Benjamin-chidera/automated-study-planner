@@ -2,6 +2,8 @@ import Image from "next/image";
 import React from "react";
 // seo
 import { Metadata } from "next";
+import summaryImg from "../../../public/summary-img.jpg"
+import summaryArrow from "../../../public/summary-arrow.png"
 
 // this is for SEO purposes
 export const metadata: Metadata = {
@@ -37,7 +39,7 @@ const page = () => {
   return (
     <main className=" space-y-14">
       <section>
-        <h1 className=" font-bold text-xl md:text-3xl">About This App</h1>
+        <h1 className=" font-bold text-xl md:text-2xl">About This App</h1>
 
         <p className=" mt-2 text-gray-600 text-lg">
           Helping students plan smarter with AI.
@@ -51,18 +53,18 @@ const page = () => {
       </section>
 
       <section>
-        <h1 className=" font-bold text-xl md:text-3xl">Key Features</h1>
+        <h1 className=" font-bold text-xl md:text-2xl">Key Features</h1>
 
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-7">
           <div className="w-full space-y-3">
             <Image
-              src="/study-materials.png"
+              src="/study-materials.jpg"
               alt="Study materials"
               height={500}
               width={500}
               quality={100}
               loading="lazy"
-              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-xl"
             />
 
             <h1 className="font-medium text-lg md:text-2xl">
@@ -77,13 +79,13 @@ const page = () => {
 
           <div className=" space-y-3">
             <Image
-              src={"/summary-img.png"}
+              src={summaryImg}
               alt="Study materials"
               height={500}
               width={500}
               quality={100}
-              loading="lazy"
-              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
+              // loading="lazy"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-xl"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
@@ -98,13 +100,13 @@ const page = () => {
 
           <div className=" space-y-3">
             <Image
-              src={"/plan-img.png"}
+              src={"/plan-img.jpg"}
               alt="Study materials"
               height={500}
               width={500}
               quality={100}
               loading="lazy"
-              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-xl"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">Weekly Planner</h1>
@@ -117,13 +119,13 @@ const page = () => {
 
           <div className=" space-y-3">
             <Image
-              src={"/goal-img.png"}
+              src={"/goal-img.jpg"}
               alt="Study materials"
               height={500}
               width={500}
               quality={100}
               loading="lazy"
-              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-xl"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
@@ -170,7 +172,7 @@ const page = () => {
 
         <div className="flex items-center">
           <Image
-            src={"/summary-arrow.png"}
+            src={summaryArrow}
             alt="Study materials"
             height={50}
             width={50}
@@ -224,13 +226,13 @@ const page = () => {
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-7">
           <div className=" space-y-3">
             <Image
-              src={"/struggle-img.png"}
+              src={"/struggle-img.jpg"}
               alt="Study materials"
               height={500}
               width={500}
               quality={100}
               loading="lazy"
-              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-xl"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
@@ -240,13 +242,13 @@ const page = () => {
 
           <div className=" space-y-3">
             <Image
-              src={"/book-img.png"}
+              src={"/book-img.jpg"}
               alt="Study materials"
               height={500}
               width={500}
               quality={100}
               loading="lazy"
-              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-xl"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
@@ -256,13 +258,13 @@ const page = () => {
 
           <div className=" space-y-3">
             <Image
-              src={"/peace-img.png"}
+              src={"/peace-img.jpg"}
               alt="Study materials"
               height={500}
               width={500}
               quality={100}
               loading="lazy"
-              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px]"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-xl"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">
@@ -272,13 +274,13 @@ const page = () => {
 
           <div className=" space-y-3">
             <Image
-              src={"/happy-img.png"}
+              src={"/happy-img.jpg"}
               alt="Study materials"
               height={500}
               width={500}
               quality={100}
               loading="lazy"
-              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-2xl"
+              className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-xl"
             />
 
             <h1 className=" font-medium text-lg md:text-2xl">

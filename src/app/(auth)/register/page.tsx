@@ -143,12 +143,12 @@ const RegisterPage = () => {
       <section className="hidden xl:block lg:flex-1">
         <div className=" w-full">
           <Image
-            src={"/auth-img.png"}
+            src={"/auth-img.jpg"}
             alt="auth image"
             width={500}
             height={500}
             loading="lazy"
-            className=" w-full h-[400px] lg:h-[700px]"
+            className=" w-full h-[400px] lg:h-[500px] rounded-xl"
           />
         </div>
       </section>

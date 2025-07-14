@@ -17,7 +17,7 @@ export const NavLink = ({ href, label }: NavLinkProps) => {
   return (
     <Link
       href={href}
-      className={`w-[60px] md:w-[110px] flex flex-col items-center justify-center text-sm font-bold rounded-full h-10 md:px-4 transition-colors duration-200 ${
+      className={`w-[60px] md:w-[90px] flex flex-col items-center justify-center text-sm font-bold rounded-full h-8 md:px-2 transition-colors duration-200 ${
         isActive
           ? "bg-[#4F46E5] text-white shadow-lg"
           : "text-black hover:bg-gray-100"

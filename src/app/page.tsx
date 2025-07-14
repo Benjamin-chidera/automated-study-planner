@@ -52,7 +52,7 @@ export default function Home() {
   return (
     <main className="">
       {/* hero section */}
-      <section className="relative h-[500px]">
+      <section className="relative h-[400px]">
         <Image
           src="/hero-img.jpg"
           alt="Hero image"
@@ -67,7 +67,7 @@ export default function Home() {
           <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
             AI-Powered Study Planner
           </h1>
-          <p className="mt-4 text-lg md:text-xl text-white/90">
+          <p className="mt-4 md:text-xl text-white/90">
             Upload your screenshots, get a smart study plan.
           </p>
 
@@ -82,37 +82,37 @@ export default function Home() {
 
       {/* how it works */}
       <section className=" mt-7">
-        <h1 className="font-bold text-2xl mb-6 text-left text-gray-800">
+        <h1 className="font-bold text-xl mb-6 text-left text-gray-800">
           How It Works
         </h1>
         <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-5">
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <Upload size={32} className="text-indigo-600" />
-            <h3 className="font-bold text-lg text-gray-700">Upload</h3>
+            <Upload size={20} className="text-indigo-600" />
+            <h3 className="font-bold text-gray-700">Upload</h3>
             <p className="text-sm text-gray-500">
               Add screenshots or lecture slides
             </p>
           </div>
 
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <FileText size={32} className="text-indigo-600" />
-            <h3 className="font-bold text-lg text-gray-700">Extract</h3>
+            <FileText size={20} className="text-indigo-600" />
+            <h3 className="font-bold text-gray-700">Extract</h3>
             <p className="text-sm text-gray-500">
               AI extracts and summarizes your content
             </p>
           </div>
 
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <Calendar size={32} className="text-indigo-600" />
-            <h3 className="font-bold text-lg text-gray-700">Plan</h3>
+            <Calendar size={20} className="text-indigo-600" />
+            <h3 className="font-bold text-gray-700">Plan</h3>
             <p className="text-sm text-gray-500">
               Generate a smart, personalized study plan
             </p>
           </div>
 
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <SlidersHorizontal size={32} className="text-indigo-600" />
-            <h3 className="font-bold text-lg text-gray-700">Track</h3>
+            <SlidersHorizontal size={20} className="text-indigo-600" />
+            <h3 className="font-bold text-gray-700">Track</h3>
             <p className="text-sm text-gray-500">
               Mark tasks done and tweak your schedule
             </p>
@@ -123,35 +123,31 @@ export default function Home() {
       {/* why use this app */}
 
       <section className=" mt-10">
-        <h1 className="font-bold text-2xl mb-6 text-left text-gray-800 capitalize">
+        <h1 className="font-bold text-xl mb-6 text-left text-gray-800 capitalize">
           Why use this app
         </h1>
 
         <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
             {/* <Upload/> */}
-            <Clock size={32} className="text-indigo-600" />
-            <h3 className="font-bold text-lg text-gray-700">Save Time</h3>
+            <Clock size={20} className="text-indigo-600" />
+            <h3 className="font-bold text-gray-700">Save Time</h3>
             <p className="text-sm text-gray-500">
               Automate your study planning and focus on learning.
             </p>
           </div>
 
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <Rocket size={32} className="text-indigo-600" />
-            <h3 className="font-bold text-lg text-gray-700">
-              Boost Productivity
-            </h3>
+            <Rocket size={20} className="text-indigo-600" />
+            <h3 className="font-bold text-gray-700">Boost Productivity</h3>
             <p className="text-sm text-gray-500">
               Maximize your study efficiency with tailored schedule.
             </p>
           </div>
 
           <div className="flex flex-col items-center text-center gap-3 border border-gray-300 p-5 rounded-xl bg-white shadow-sm hover:shadow-md transition">
-            <User size={32} className="text-indigo-600" />
-            <h3 className="font-bold text-lg text-gray-700">
-              Personalized Schedule
-            </h3>
+            <User size={20} className="text-indigo-600" />
+            <h3 className="font-bold text-gray-700">Personalized Schedule</h3>
             <p className="text-sm text-gray-500">
               Get a study plan that fit your unique needs and goals.
             </p>
@@ -161,7 +157,7 @@ export default function Home() {
 
       {/* ready */}
       <section className="mt-20 text-center">
-        <h1 className="font-black text-4xl text-gray-800 capitalize text-center">
+        <h1 className="font-black text-2xl text-gray-800 capitalize text-center">
           Ready to take control of your studies?
         </h1>
 
