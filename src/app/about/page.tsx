@@ -84,7 +84,7 @@ const page = () => {
               height={500}
               width={500}
               quality={100}
-              // loading="lazy"
+              loading="lazy"
               className="w-full h-auto max-w-full object-contain sm:w-[300px] lg:w-[340px] rounded-xl"
             />
 
